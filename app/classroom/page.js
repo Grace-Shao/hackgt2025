@@ -1,31 +1,38 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
-import { ArrowLeft, Gamepad2 } from "lucide-react"
+import { Gamepad2 } from "lucide-react"
 import Image from "next/image"
+import { MainNav } from "@/components/main-nav"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu"
 
 export default function ClassroomPage() {
   const gameStations = [
     {
       id: 1,
-      name: "Game1",
-      type: "Memory Match",
-      difficulty: "Easy",
+      name: "Face Match",
+      type: "Face Recognition",
+      difficulty: "Hard",
       position: { top: "20%", left: "25%" },
+      route: "/games/face",
     },
     {
       id: 2,
-      name: "Game2",
+      name: "Word Memory",
       type: "Word Puzzle",
       difficulty: "Medium",
       position: { top: "20%", left: "55%" },
+      route: "/games/word-games/memory",
     },
     {
       id: 3,
-      name: "Game3",
-      type: "Number Logic",
+      name: "Memory Game",
+      type: "Can you remember the notes?",
       difficulty: "Easy",
       position: { top: "40%", left: "15%" },
+      route: "/games/memory",
     },
     {
       id: 4,
@@ -71,39 +78,81 @@ export default function ClassroomPage() {
 
   return (
     <div className="min-h-screen bg-yellow-50">
-      <header className="border-b border-border bg-card/80 backdrop-blur-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/">
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                Back to Home
-              </Link>
-            </Button>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Virtual Classroom</h1>
-              <p className="text-muted-foreground">Click on any game station to start playing</p>
-            </div>
-          </div>
-        </div>
-      </header>
+      <MainNav />
 
       <div className="container mx-auto px-6 py-8">
         <div className="relative">
-          <h2 className="text-2xl font-bold text-center mb-8 text-foreground">
-            Welcome to Your Brain Training Classroom
+          <h2
+            className="text-2xl font-bold text-center mb-8 text-foreground"
+            style={{
+              fontFamily: '"Caveat", cursive',
+              fontSize: "3rem",
+              color: "#6b4b3e",
+              marginBottom: "1.5rem",
+            }}
+          >
+            ☕️ Welcome to our Cozy Coffee and Games Community
           </h2>
+
+          {/* Instructions (accessible dropdown for elderly users) */}
+          <div className="mt-8 text-center mb-8">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="inline-flex items-center gap-3 rounded-lg px-5 py-3 text-lg font-semibold shadow-md hover:bg-opacity-95 focus:outline-none text-white"
+                  style={{ backgroundColor: '#c9a079' }}
+                  aria-expanded="false"
+                >
+                  <Gamepad2 className="w-6 h-6" />
+                  How to Play
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent sideOffset={8} align="center" className="p-6 w-[min(720px,92vw)] bg-white border border-slate-200 rounded-lg shadow-lg">
+                <div className="space-y-4 text-left">
+                  <div className="flex items-start gap-3 text-lg">
+                    <div className="w-10 h-10 bg-sage-200 rounded-full flex items-center justify-center font-bold text-sage-800">1</div>
+                    <div>
+                      <p className="font-semibold text-lg">Choose a Game Station</p>
+                      <p className="text-sm">Click on any colored game desk to start</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 text-lg">
+                    <div className="w-10 h-10 bg-sage-200 rounded-full flex items-center justify-center font-bold text-sage-800">2</div>
+                    <div>
+                      <p className="font-semibold text-lg">Play & Learn</p>
+                      <p className="text-sm">Exercise your brain with fun activities</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 text-lg">
+                    <div className="w-10 h-10 bg-sage-200 rounded-full flex items-center justify-center font-bold text-sage-800">3</div>
+                    <div>
+                      <p className="font-semibold text-lg">Track Progress</p>
+                      <p className="text-sm">See your improvement over time</p>
+                    </div>
+                  </div>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
           <div className="relative bg-yellow-100 rounded-2xl p-8 shadow-lg border border-yellow-300 overflow-hidden">
             {/* Classroom Floor Pattern */}
             <div
-              className="absolute inset-0 opacity-20"
+              className="absolute inset-0 opacity-25 pointer-events-none"
               style={{
                 backgroundImage: `
-                  linear-gradient(90deg, #facc15 1px, transparent 1px),
-                  linear-gradient(#facc15 1px, transparent 1px)
+                  repeating-linear-gradient(to bottom,
+                    #d7b48a 0 56px,
+                    #9b5f3a 56px 112px
+                  ),
+                  linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01)),
+                  radial-gradient(circle at 12% 22%, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0) 10px),
+                  radial-gradient(circle at 72% 64%, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0) 8px)
                 `,
-                backgroundSize: "40px 40px",
+                backgroundSize: "100% 112px, 100% 100%, 220px 220px, 180px 180px",
+                backgroundRepeat: "repeat, no-repeat, repeat, repeat",
+                backgroundPosition: "0 0, 0 0, 0 0, 0 0",
+                filter: "saturate(1.02) contrast(0.98)",
               }}
             />
 
@@ -143,7 +192,7 @@ export default function ClassroomPage() {
 
               {gameStations.map((station, index) => (
                 <div key={station.id} className="absolute" style={station.position}>
-                  <Link href={`/games/${station.id}`}>
+                  <Link href={station.route ?? `/games/${station.id}`}>
                     {/* Desk */}
                     <div className="relative group cursor-pointer w-40 h-32 transform transition-all duration-200 hover:scale-110 hover:shadow-lg hover:-translate-y-1">
                       <Image
@@ -186,46 +235,6 @@ export default function ClassroomPage() {
             </div>
           </div>
 
-          {/* Instructions */}
-          <div className="mt-8 text-center">
-            <Card className="bg-white/80 backdrop-blur-sm border-2 border-sage-300">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-4 text-foreground flex items-center justify-center gap-2">
-                  <Gamepad2 className="w-6 h-6" />
-                  How to Play
-                </h3>
-                <div className="grid md:grid-cols-3 gap-4 text-left">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-sage-200 rounded-full flex items-center justify-center font-bold text-sage-800">
-                      1
-                    </div>
-                    <div>
-                      <p className="font-semibold">Choose a Game Station</p>
-                      <p className="text-sm text-muted-foreground">Click on any colored game desk to start</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-sage-200 rounded-full flex items-center justify-center font-bold text-sage-800">
-                      2
-                    </div>
-                    <div>
-                      <p className="font-semibold">Play & Learn</p>
-                      <p className="text-sm text-muted-foreground">Exercise your brain with fun activities</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-sage-200 rounded-full flex items-center justify-center font-bold text-sage-800">
-                      3
-                    </div>
-                    <div>
-                      <p className="font-semibold">Track Progress</p>
-                      <p className="text-sm text-muted-foreground">See your improvement over time</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
     </div>

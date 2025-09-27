@@ -151,24 +151,12 @@ export function MainNav() {
             </div>
             <div>
               <h1 style={logoTextStyle}>ElderConnect</h1>
-              <p
-                style={{
-                  ...logoSubtextStyle,
-                  display: typeof window !== "undefined" && window.innerWidth >= 640 ? "block" : "none",
-                }}
-              >
-                Building connections
-              </p>
+              <p style={logoSubtextStyle} className="hidden sm:block">Building connections</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav
-            style={{
-              ...navStyle,
-              display: typeof window !== "undefined" && window.innerWidth >= 768 ? "flex" : "none",
-            }}
-          >
+          <nav style={navStyle} className="hidden md:flex">
             {navItems.map((item) => {
               const Icon = item.icon
               return (
@@ -181,13 +169,7 @@ export function MainNav() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
-            style={{
-              ...mobileButtonStyle,
-              display: typeof window !== "undefined" && window.innerWidth >= 768 ? "none" : "flex",
-            }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
+          <button style={mobileButtonStyle} className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? (
               <X style={{ width: "24px", height: "24px" }} />
             ) : (
@@ -198,12 +180,7 @@ export function MainNav() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <nav
-            style={{
-              ...mobileNavStyle,
-              display: typeof window !== "undefined" && window.innerWidth >= 768 ? "none" : "block",
-            }}
-          >
+          <nav style={mobileNavStyle} className="md:hidden">
             <div style={mobileNavContainerStyle}>
               {navItems.map((item) => {
                 const Icon = item.icon
