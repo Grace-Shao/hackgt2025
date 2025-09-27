@@ -11,48 +11,54 @@ const TILES = [
     label: "C",
     symbol: "♪",
     freq: 261.63, // C4
-    baseClass: "bg-rose-200",
-    activeClass: "bg-rose-600",
+    baseClass: "bg-[#F7A6A1]/70 text-[#4b2f23]",
+    activeClass: "bg-[#F7A6A1] text-[#4b2f23]",
+    legend: "#F7A6A1",
   },
   {
     id: 4,
     label: "D",
     symbol: "♪",
     freq: 293.66, // D4
-    baseClass: "bg-indigo-200",
-    activeClass: "bg-indigo-600",
+    baseClass: "bg-[#FBC4A0]/70 text-[#4b2f23]",
+    activeClass: "bg-[#FBC4A0] text-[#4b2f23]",
+    legend: "#FBC4A0",
   },
   {
     id: 1,
     label: "E",
     symbol: "♪",
     freq: 329.63, // E4
-    baseClass: "bg-emerald-200",
-    activeClass: "bg-emerald-600",
+    baseClass: "bg-[#FDF1A9]/70 text-[#4b2f23]",
+    activeClass: "bg-[#FDF1A9] text-[#4b2f23]",
+    legend: "#FDF1A9",
   },
   {
     id: 2,
     label: "G",
     symbol: "♪",
     freq: 392.0, // G4
-    baseClass: "bg-sky-200",
-    activeClass: "bg-sky-600",
+    baseClass: "bg-[#B6E2B6]/70 text-[#4b2f23]",
+    activeClass: "bg-[#B6E2B6] text-[#4b2f23]",
+    legend: "#B6E2B6",
   },
   {
     id: 5,
     label: "A",
     symbol: "♪",
     freq: 440.0, // A4
-    baseClass: "bg-lime-200",
-    activeClass: "bg-lime-600",
+    baseClass: "bg-[#A7D8F7]/70 text-[#4b2f23]",
+    activeClass: "bg-[#A7D8F7] text-[#4b2f23]",
+    legend: "#A7D8F7",
   },
   {
     id: 3,
     label: "B",
     symbol: "♪",
     freq: 493.88, // B4
-    baseClass: "bg-amber-200",
-    activeClass: "bg-amber-600",
+    baseClass: "bg-[#C7B5E9]/70 text-[#4b2f23]",
+    activeClass: "bg-[#C7B5E9] text-[#4b2f23]",
+    legend: "#C7B5E9",
   },
 ];
 
@@ -115,6 +121,17 @@ function useAudio() {
 
   return { play, resume };
 }
+
+const PALETTE = {
+  dark: "#6b4b3e",
+  tan: "#c49e85",
+  lightBrown: "#ffd6af",
+  background: "#f8f4f9",
+  lavender: "#BEA7E5",
+};
+
+const BUTTON_BASE =
+  "rounded-full px-6 h-12 text-lg font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
 
 export default function MemorySequenceGame() {
   const [status, setStatus] = useState("idle"); // idle | computer | player | won | lost
@@ -273,136 +290,157 @@ export default function MemorySequenceGame() {
   const gridClasses = "grid grid-cols-2 md:grid-cols-3 gap-4 max-w-md mx-auto";
 
   return (
-    <main className="p-6 md:p-10 max-w-5xl mx-auto space-y-6">
-      <h1 className="text-3xl font-extrabold">Memory Sequence</h1>
+    <main
+      className="relative min-h-screen py-10 px-4 md:px-10 text-[#4b2f23]"
+      style={{ backgroundColor: PALETTE.background }}
+      suppressHydrationWarning
+    >
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div className="absolute -top-24 -right-16 h-64 w-64 rounded-full bg-[rgba(190,167,229,0.35)] blur-3xl" />
+        <div className="absolute -bottom-24 -left-14 h-80 w-80 rounded-full bg-[rgba(255,214,175,0.35)] blur-3xl" />
+      </div>
 
-      {/* Controls */}
-      <div className="rounded-xl border p-4 bg-white space-y-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2">
-            <span className="text-sm opacity-70">Sound:</span>
-            <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col space-y-8">
+        <header className="flex flex-col items-start gap-3">
+         
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#4b2f23] md:text-4xl">
+            Simon Says: Memory Blend
+          </h1>
+          <p className="max-w-3xl text-lg leading-relaxed text-[#4b2f23] opacity-80">
+            Cozy up and follow the musical pattern. Listen, repeat, and enjoy the rhythm as the
+            sequence grows round by round.
+          </p>
+        </header>
+
+        <section className="rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/85 p-6 shadow-sm space-y-4">
+          <div className="flex flex-wrap items-center gap-4 text-base">
+            <label className="flex items-center gap-2">
+              <span className="text-sm font-medium text-[#4b2f23] opacity-80">Sound</span>
               <input
                 type="checkbox"
-                className="accent-black"
+                className="h-5 w-5 accent-[#6b4b3e]"
                 checked={soundOn}
                 onChange={(e) => setSoundOn(e.target.checked)}
               />
-              {soundOn ? "On" : "Off"}
+              <span>{soundOn ? "On" : "Off"}</span>
             </label>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm opacity-70">Strict mode:</span>
-            <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+            <label className="flex items-center gap-2">
+              <span className="text-sm font-medium text-[#4b2f23] opacity-80">Strict mode</span>
               <input
                 type="checkbox"
-                className="accent-black"
+                className="h-5 w-5 accent-[#6b4b3e]"
                 checked={strict}
                 onChange={(e) => setStrict(e.target.checked)}
               />
-              {strict ? "On (restart on mistake)" : "Off (replay on mistake)"}
+              <span>{strict ? "On (restart on mistake)" : "Off (replay on mistake)"}</span>
             </label>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm opacity-70">Speed:</span>
-            <select
-              className="border rounded-lg px-3 py-2 text-base"
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-            >
-              <option value={700}>Chill</option>
-              <option value={550}>Normal</option>
-              <option value={430}>Spicy</option>
-              <option value={360}>Insane</option>
-            </select>
-          </div>
-
-          <div className="ml-auto flex gap-2">
-            <button
-              onClick={startGame}
-              className="rounded-full border px-6 h-11 text-lg font-semibold disabled:opacity-50"
-              disabled={status === "computer"}
-            >
-              Start
-            </button>
-            <button
-              onClick={giveUp}
-              className="rounded-full border px-6 h-11 text-lg font-semibold disabled:opacity-50"
-              disabled={status === "idle"}
-            >
-              Stop
-            </button>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm opacity-70">
-          <div>
-            <span className="font-semibold">Score:</span> {score}
-          </div>
-          <div>
-            <span className="font-semibold">Best:</span> {best}
-          </div>
-          <div>
-            <span className="font-semibold">Status:</span> {message}
-          </div>
-        </div>
-        {strictHint && (
-          <div className="text-xs text-rose-600 font-semibold">
-            {strictHint}
-          </div>
-        )}
-      </div>
-
-      {/* Board */}
-      <div className="rounded-xl border p-5 bg-[#fafafa]">
-        <div className={gridClasses}>
-          {TILES.map((t) => {
-            const isActive = activeTile === t.id;
-            return (
-              <button
-                key={t.id}
-                onMouseDown={() => handlePress(t.id)}
-                onTouchStart={() => handlePress(t.id)}
-                disabled={status === "computer"}
-                className={[
-                  "relative aspect-square rounded-2xl border shadow-sm flex items-center justify-center transition-all select-none",
-                  isActive ? t.activeClass : t.baseClass,
-                  isActive ? "text-white" : "text-gray-900",
-                  status === "computer" ? "opacity-70 cursor-not-allowed" : "hover:brightness-105 active:brightness-110",
-                ].join(" ")}
+            <label className="flex items-center gap-2">
+              <span className="text-sm font-medium text-[#4b2f23] opacity-80">Speed</span>
+              <select
+                className="rounded-full border border-[rgba(107,75,62,0.25)] bg-white px-4 py-2 text-base"
+                value={speed}
+                onChange={(e) => setSpeed(Number(e.target.value))}
               >
-                <div className="text-center">
-                  <div className="text-5xl leading-none">{t.symbol}</div>
-                  <div className="text-xl font-bold opacity-80 mt-1">{t.label}</div>
-                </div>
-                {/* Glow ring when active */}
-                <div
-                  className={[
-                    "absolute inset-0 rounded-2xl ring-0",
-                    isActive ? "ring-8 ring-white/60" : "",
-                  ].join(" ")}
-                />
+                <option value={700}>Chill</option>
+                <option value={550}>Steady</option>
+                <option value={430}>Breezy</option>
+                <option value={360}>Spirited</option>
+              </select>
+            </label>
+
+            <div className="ml-auto flex flex-wrap gap-3">
+              <button
+                onClick={startGame}
+                className={`${BUTTON_BASE} bg-[#6b4b3e] text-white hover:bg-[#5a3f34] focus-visible:outline-[#6b4b3e] disabled:cursor-not-allowed disabled:opacity-60`}
+                disabled={status === "computer"}
+              >
+                Start
               </button>
-            );
-          })}
-        </div>
-
-        {/* Legend */}
-        <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-          {TILES.map((t) => (
-            <div key={t.id} className="flex items-center gap-2">
-              <span className={`inline-block w-4 h-4 rounded ${t.baseClass} border`} />
-              <span className="font-semibold">{t.label}</span>
-              <span className="opacity-70">{Math.round(t.freq)} Hz</span>
+              <button
+                onClick={giveUp}
+                className={`${BUTTON_BASE} border border-[rgba(107,75,62,0.3)] bg-white text-[#6b4b3e] hover:bg-[#f4ece6] focus-visible:outline-[#6b4b3e] disabled:cursor-not-allowed disabled:opacity-60`}
+                disabled={status === "idle"}
+              >
+                Stop
+              </button>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      <div className="text-sm opacity-70">
-        Tips: Start slow and listen for intervals. Strict mode restarts on mistakes; otherwise the round is replayed so you can learn the pattern. Your best score is saved locally.
+          <div className="flex flex-wrap gap-4 text-base text-[#4b2f23]">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[rgba(190,167,229,0.2)] px-4 py-1 font-semibold">
+              Score
+              <span>{score}</span>
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,214,175,0.3)] px-4 py-1 font-semibold">
+              Best
+              <span>{best}</span>
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1 font-semibold" aria-live="polite">
+              Status
+              <span className="font-medium text-[#4b2f23] opacity-80">{message}</span>
+            </span>
+          </div>
+          {strictHint && (
+            <div className="inline-flex rounded-full bg-[rgba(190,50,70,0.08)] px-4 py-2 text-sm font-semibold text-[#a8464f]">
+              {strictHint}
+            </div>
+          )}
+        </section>
+
+        <section className="relative space-y-5 rounded-3xl border border-[rgba(107,75,62,0.15)] bg-white/85 p-6 shadow-lg">
+          <div className={gridClasses}>
+            {TILES.map((t) => {
+              const isActive = activeTile === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onMouseDown={() => handlePress(t.id)}
+                  onTouchStart={() => handlePress(t.id)}
+                  disabled={status === "computer"}
+                  className={[
+                    "relative aspect-square rounded-2xl border border-[rgba(107,75,62,0.12)] shadow-sm flex items-center justify-center transition-all select-none",
+                    isActive ? t.activeClass : t.baseClass,
+                    status === "computer"
+                      ? "opacity-70 cursor-not-allowed"
+                      : "hover:brightness-105 active:scale-[0.98]",
+                  ].join(" ")}
+                >
+                  <div className="text-center">
+                    <div className="text-5xl leading-none drop-shadow-sm">{t.symbol}</div>
+                    <div className="mt-1 text-xl font-semibold opacity-80">{t.label}</div>
+                  </div>
+                  <div
+                    className={[
+                      "pointer-events-none absolute inset-0 rounded-2xl ring-0 transition-all",
+                      isActive ? "ring-8 ring-white/60" : "",
+                    ].join(" ")}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 text-sm text-[#4b2f23] opacity-80 md:grid-cols-4">
+            {TILES.map((t) => (
+              <div key={t.id} className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2">
+                <span
+                  className="inline-block h-4 w-4 rounded-full border border-[rgba(107,75,62,0.25)]"
+                  style={{ backgroundColor: t.legend }}
+                />
+                <span className="font-semibold">{t.label}</span>
+                <span className="opacity-70">{Math.round(t.freq)} Hz</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <footer className="max-w-3xl text-sm leading-relaxed text-[#4b2f23] opacity-80">
+          Tips: Start slow, hum along, and notice the rhythm. Strict mode restarts on mistakes;
+          otherwise the round is replayed so you can learn the pattern. Your best score is saved
+          locally.
+        </footer>
       </div>
     </main>
   );

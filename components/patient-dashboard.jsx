@@ -15,13 +15,25 @@ import {
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
+import Link from "next/link"
 import { Search, Plus, Video, MoreHorizontal, Edit, Trash2, Brain, Activity, Users } from "lucide-react"
+
+const PALETTE = {
+    dark: "#6b4b3e",
+    tan: "#c49e85",
+    lightBrown: "#ffd6af",
+    background: "#f8f4f9",
+    lavender: "#BEA7E5",
+}
+
+const BUTTON_BASE =
+    "rounded-full px-6 h-11 text-sm font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 
 const initialPatients = [
     {
         id: 1,
-        name: "Lorem Ipsum",
-        email: "lorem@email.com",
+        name: "Jane Doe",
+        email: "jdoe@email.com",
         conditions: ["Alzheimer's", "Dementia"],
         priority: "High",
         lastSeen: "Today 8:00 PM",
@@ -261,110 +273,146 @@ export function PatientDashboard() {
     const totalActivities = patients.reduce((sum, p) => sum + p.activities, 0)
 
     return (
-        <div className="space-y-6">
-            {/* Dashboard Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-card rounded-lg border border-border p-4">
-                    <div className="flex items-center space-x-2">
-                        <Users className="h-5 w-5 text-primary" />
-                        <span className="text-sm font-medium text-muted-foreground">Total Patients</span>
-                    </div>
-                    <div className="text-2xl font-bold text-foreground mt-2">{totalPatients}</div>
-                </div>
-                <div className="bg-card rounded-lg border border-border p-4">
-                    <div className="flex items-center space-x-2">
-                        <Brain className="h-5 w-5 text-primary" />
-                        <span className="text-sm font-medium text-muted-foreground">Avg Cognitive Score</span>
-                    </div>
-                    <div className={`text-2xl font-bold mt-2 ${getCognitiveScoreColor(averageCognitiveScore)}`}>
-                        {averageCognitiveScore}%
-                    </div>
-                </div>
-                <div className="bg-card rounded-lg border border-border p-4">
-                    <div className="flex items-center space-x-2">
-                        <Activity className="h-5 w-5 text-primary" />
-                        <span className="text-sm font-medium text-muted-foreground">Total Activities</span>
-                    </div>
-                    <div className="text-2xl font-bold text-foreground mt-2">{totalActivities}</div>
-                </div>
-                <div className="bg-card rounded-lg border border-border p-4">
-                    <div className="flex items-center space-x-2">
-                        <div className="h-5 w-5 bg-red-500 rounded-full" />
-                        <span className="text-sm font-medium text-muted-foreground">High Priority</span>
-                    </div>
-                    <div className="text-2xl font-bold text-foreground mt-2">{highPriorityPatients}</div>
-                </div>
+        <div
+            className="relative min-h-screen py-10 px-4 md:px-10"
+            style={{ backgroundColor: PALETTE.background, color: PALETTE.dark }}
+        >
+            <div className="pointer-events-none absolute inset-0" aria-hidden>
+                <div className="absolute -top-24 -right-12 h-64 w-64 rounded-full bg-[rgba(190,167,229,0.25)] blur-3xl" />
+                <div className="absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-[rgba(255,214,175,0.35)] blur-3xl" />
             </div>
 
-            {/* Header Section */}
-            <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-semibold text-foreground">Dr. John Stuart</h1>
-                <div className="flex space-x-2">
-                    <Button variant="outline" className="bg-background flex items-center px-3 py-1.5 text-lg">
-                        <Activity className="w-6 h-6 mr-3" />
-                        Activities
-                    </Button>
-                    <Button
-                        className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center px-3 py-1.5 text-lg"
-                        onClick={handleAddClient}
-                    >
-                        <Plus className="w-6 h-6 mr-3" />
-                        Add client
-                    </Button>
+            <div className="relative z-10 mx-auto flex max-w-6xl flex-col space-y-8">
+                {/* Dashboard Stats */}
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+                    <div className="rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/80 p-5 shadow-sm">
+                        <div className="flex items-center gap-3 text-sm font-medium text-[#6b4b3e] opacity-80">
+                            <Users className="h-5 w-5 text-[#6b4b3e]" />
+                            Total Patients
+                        </div>
+                        <div className="mt-3 text-3xl font-semibold text-[#4b2f23]">{totalPatients}</div>
+                    </div>
+                    <div className="rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/80 p-5 shadow-sm">
+                        <div className="flex items-center gap-3 text-sm font-medium text-[#6b4b3e] opacity-80">
+                            <Brain className="h-5 w-5 text-[#6b4b3e]" />
+                            Avg Cognitive Score
+                        </div>
+                        <div className={`mt-3 text-3xl font-semibold ${getCognitiveScoreColor(averageCognitiveScore)}`}>
+                            {averageCognitiveScore}%
+                        </div>
+                    </div>
+                    <div className="rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/80 p-5 shadow-sm">
+                        <div className="flex items-center gap-3 text-sm font-medium text-[#6b4b3e] opacity-80">
+                            <Activity className="h-5 w-5 text-[#6b4b3e]" />
+                            Total Activities
+                        </div>
+                        <div className="mt-3 text-3xl font-semibold text-[#4b2f23]">{totalActivities}</div>
+                    </div>
+                    <div className="rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/80 p-5 shadow-sm">
+                        <div className="flex items-center gap-3 text-sm font-medium text-[#6b4b3e] opacity-80">
+                            <div className="h-5 w-5 rounded-full border border-red-200 bg-red-100" />
+                            High Priority
+                        </div>
+                        <div className="mt-3 text-3xl font-semibold text-[#4b2f23]">{highPriorityPatients}</div>
+                    </div>
                 </div>
-            </div>
 
-            {/* Search Bar */}
-            <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input
-                    placeholder="Search patients..."
-                    className="pl-10 bg-muted/50 border-border"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </div>
+                {/* Header Section */}
+                <div className="flex flex-wrap items-center gap-4">
+                    <div>
+                        <h1 className="text-3xl font-semibold text-[#4b2f23]">Dr. John Stuart</h1>
+                        <p className="text-sm text-[#6b4b3e] opacity-70">
+                            Monitoring patient cognition, activity, and support plans.
+                        </p>
+                    </div>
+                    <div className="ml-auto flex flex-wrap items-center gap-3">
+                        <Button
+                            variant="ghost"
+                            className={`${BUTTON_BASE} bg-white/85 text-[#4b2f23] hover:bg-[#f4ece6] focus-visible:outline-[#6b4b3e] flex items-center gap-2`}
+                        >
+                            <Activity className="h-4 w-4" />
+                            Activities
+                        </Button>
+                        <Button
+                            className={`${BUTTON_BASE} bg-[#6b4b3e] text-white hover:bg-[#5a3f34] focus-visible:outline-[#6b4b3e] flex items-center gap-2`}
+                            onClick={handleAddClient}
+                        >
+                            <Plus className="h-4 w-4" />
+                            Add client
+                        </Button>
+                    </div>
+                </div>
 
-            {/* Filter Tabs */}
-            <div className="flex items-center space-x-1 border-b border-border">
-                {tabs.map((tab) => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab
-                            ? "text-primary border-b-2 border-primary"
-                            : "text-muted-foreground hover:text-foreground"
-                            }`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
+                {/* Search Bar */}
+                <div className="relative max-w-xl">
+                    <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6b4b3e] opacity-60" />
+                    <Input
+                        placeholder="Search patients..."
+                        className="h-11 rounded-full border border-[rgba(107,75,62,0.2)] bg-white/85 pl-11 text-sm text-[#4b2f23] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b4b3e]"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </div>
 
-            {/* Patient Table */}
-            <div className="bg-card rounded-lg border border-border overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-muted/50">
-                            <tr>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Name</th>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Conditions</th>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Priority</th>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Cognitive Score</th>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Activities</th>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Last seen</th>
-                                <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Video Call</th>
-                                <th className="w-12"></th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-border">
+                {/* Filter Tabs */}
+                <div className="flex flex-wrap gap-2">
+                    {tabs.map((tab) => {
+                        const isActive = activeTab === tab
+                        return (
+                            <button
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={`rounded-full px-4 py-1.5 text-sm font-medium shadow-sm transition-colors ${isActive
+                                    ? "bg-[#BEA7E5] text-[#4b2f23]"
+                                    : "bg-white/75 text-[#6b4b3e] hover:bg-[#f4ece6]"}
+                                `}
+                            >
+                                {tab}
+                            </button>
+                        )
+                    })}
+                </div>
+
+                {/* Patient Table */}
+                <div className="rounded-3xl border border-[rgba(107,75,62,0.15)] bg-white/85 shadow-xl">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-[#4b2f23]">
+                            <thead className="bg-[rgba(190,167,229,0.18)] text-xs uppercase tracking-wide text-[#4b2f23]">
+                                <tr>
+                                    <th className="px-4 py-4 text-left font-semibold">Name</th>
+                                    <th className="px-4 py-4 text-left font-semibold">Conditions</th>
+                                    <th className="px-4 py-4 text-left font-semibold">Priority</th>
+                                    <th className="px-4 py-4 text-left font-semibold">Cognitive Score</th>
+                                    <th className="px-4 py-4 text-left font-semibold">Activities</th>
+                                    <th className="px-4 py-4 text-left font-semibold">Last seen</th>
+                                    <th className="px-4 py-4 text-left font-semibold">Video Call</th>
+                                    <th className="w-12" aria-label="Actions" />
+                                </tr>
+                            </thead>
+                        <tbody className="divide-y divide-[rgba(107,75,62,0.08)]">
                             {filteredPatients.map((patient) => (
-                                <tr key={patient.id} className="hover:bg-muted/30 transition-colors">
+                                <tr key={patient.id} className="transition-colors hover:bg-[rgba(190,167,229,0.1)]">
                                     <td className="py-4 px-4">
-                                        <div>
-                                            <div className="font-medium text-foreground">{patient.name}</div>
-                                            <div className="text-sm text-muted-foreground">{patient.email}</div>
-                                        </div>
+                                        {patient.id === 1 ? (
+                                            <Link href="/hcp/dashboard" className="group block">
+                                                <div className="font-medium text-[#6b4b3e] group-hover:underline">
+                                                    {patient.name}
+                                                </div>
+                                                <div className="text-sm text-muted-foreground">{patient.email}</div>
+                                            </Link>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                className="group block w-full cursor-pointer bg-transparent p-0 text-left focus:outline-none"
+                                                aria-label={`${patient.name} patient record (preview)`}
+                                                onClick={(event) => event.preventDefault()}
+                                            >
+                                                <div className="font-medium text-[#6b4b3e] group-hover:underline">
+                                                    {patient.name}
+                                                </div>
+                                                <div className="text-sm text-muted-foreground">{patient.email}</div>
+                                            </button>
+                                        )}
                                     </td>
                                     <td className="py-4 px-4">
                                         <div className="flex flex-wrap gap-1">
@@ -390,19 +438,15 @@ export function PatientDashboard() {
                                     </td>
                                     <td className="py-4 px-4 text-sm text-muted-foreground">{patient.lastSeen}</td>
                                     <td className="py-4 px-4">
-                                        {patient.hasVideo ? (
-                                            <Button variant="ghost" size="sm" className="p-2">
-                                                <Video className="w-5 h-5 text-primary" />
-                                            </Button>
-                                        ) : (
-                                            <div className="w-9 h-9"></div>
-                                        )}
+                                        <Button variant="ghost" size="sm" className="p-2 text-[#6b4b3e] hover:bg-[#f4ece6]">
+                                            <Video className="w-5 h-5" />
+                                        </Button>
                                     </td>
                                     <td className="py-4 px-4">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="sm" className="p-2">
-                                                    <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
+                                                <Button variant="ghost" size="sm" className="p-2 text-[#6b4b3e] hover:bg-[#f4ece6]">
+                                                    <MoreHorizontal className="w-4 h-4" />
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
@@ -425,6 +469,8 @@ export function PatientDashboard() {
                         </tbody>
                     </table>
                 </div>
+            </div>
+
             </div>
 
             <Dialog open={!!editingPatient} onOpenChange={() => setEditingPatient(null)}>

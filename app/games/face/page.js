@@ -5,9 +5,9 @@ import { FilesetResolver, FaceLandmarker } from "@mediapipe/tasks-vision";
 
 /* ---------------- Steps & thresholds ---------------- */
 const STEPS = [
-  { id: "blink", text: "Blink both eyes" },
-  { id: "smile", text: "Smile 🙂" },
-  { id: "brows", text: "Raise your eyebrows" },
+  { id: "blink", text: "Simon says blink both eyes" },
+  { id: "smile", text: "Simon says smile 🙂" },
+  { id: "brows", text: "Simon says raise your eyebrows" },
 ];
 
 const DEFAULTS = {
@@ -17,6 +17,17 @@ const DEFAULTS = {
   FRAMES_REQUIRED: 3,      // Hold success for N frames
   REST_SECONDS: 4,         // Pause between steps (elderly-friendly)
 };
+
+const PALETTE = {
+  dark: "#6b4b3e",
+  tan: "#c49e85",
+  lightBrown: "#ffd6af",
+  background: "#f8f4f9",
+  lavender: "#BEA7E5",
+};
+
+const BUTTON_BASE =
+  "rounded-full px-6 h-12 text-lg font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
 
 /* ---------------- Component ---------------- */
 function Page() {
@@ -281,72 +292,168 @@ function Page() {
 
   /* ---------------- UI ---------------- */
   return (
-    <main className="p-6 md:p-8 max-w-4xl mx-auto space-y-5" suppressHydrationWarning>
-      <h1 className="text-3xl font-extrabold tracking-tight">Facial Exercise</h1>
-
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={start}  className="rounded-full border px-6 h-12 text-lg font-semibold">Start</button>
-        <button onClick={reset}  className="rounded-full border px-6 h-12 text-lg font-semibold">Restart</button>
-        <button onClick={stop}   className="rounded-full border px-6 h-12 text-lg font-semibold">Stop</button>
-        <button onClick={calibrate} disabled={status!=="running" || !faceDetected}
-                className="rounded-full border px-6 h-12 text-lg font-semibold disabled:opacity-50">
-          Calibrate (open eyes)
-        </button>
-
-        <div className="ml-auto flex items-center gap-4 text-base">
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={voiceOn} onChange={(e)=>setVoiceOn(e.target.checked)} />
-            Voice prompts
-          </label>
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={simpleMode} onChange={(e)=>setSimpleMode(e.target.checked)} />
-            Simple mode
-          </label>
-        </div>
+    <main
+      className="relative min-h-screen bg-[#f8f4f9] py-10 px-4 md:px-10 text-[#4b2f23]"
+      suppressHydrationWarning
+    >
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div className="absolute -top-24 -right-10 h-64 w-64 rounded-full bg-[rgba(190,167,229,0.4)] blur-3xl" />
+        <div className="absolute -bottom-32 -left-12 h-72 w-72 rounded-full bg-[rgba(255,214,175,0.4)] blur-3xl" />
       </div>
 
-      {/* Big instruction line */}
-      <div className="rounded-xl border p-4 bg-white">
-        <div className="text-2xl md:text-3xl font-bold leading-snug">
-          <span className="opacity-70">Instruction:&nbsp;</span>{instruction}
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col space-y-8">
+        <div className="flex flex-col items-start gap-3 text-left">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#4b2f23] md:text-4xl">
+            Simon Says
+          </h1>
+          <p className="max-w-3xl text-lg leading-relaxed text-[#4b2f23] opacity-80">
+            Take a mindful moment to wake up your facial muscles. Follow the friendly prompts,
+            sip some tea if you like, and move at your own pace.
+          </p>
         </div>
-        <div className="mt-1 text-lg opacity-80">
-          <b>Status:</b> {status}{status==="rest" ? ` · Next in ${restLeft}s` : ""} &nbsp; | &nbsp;
-          <b>Score:</b> {score}
-        </div>
-      </div>
 
-      <div className="rounded-xl border p-3 relative bg-[#fafafa]">
-        <video ref={videoRef} className="hidden" playsInline />
-        <div className="relative">
-          <canvas ref={canvasRef} className="w-full rounded-lg border bg-black/5" />
-          <div className="absolute top-4 right-4 text-6xl md:text-7xl select-none">
-            {isOk ? <span className="text-green-600">✅</span> : <span className="text-pink-600">❌</span>}
+        <div className="flex flex-wrap items-center gap-4">
+          <button
+            onClick={start}
+            className={`${BUTTON_BASE} bg-[#6b4b3e] text-white hover:bg-[#5a3f34] focus-visible:outline-[#6b4b3e]`}
+          >
+            Start
+          </button>
+          <button
+            onClick={reset}
+            className={`${BUTTON_BASE} bg-[#6b4b3e] text-white hover:bg-[#5a3f34] focus-visible:outline-[#6b4b3e]`}
+          >
+            Restart
+          </button>
+          <button
+            onClick={stop}
+            className={`${BUTTON_BASE} border border-[rgba(107,75,62,0.3)] bg-white text-[#6b4b3e] hover:bg-[#f4ece6] focus-visible:outline-[#6b4b3e]`}
+          >
+            Stop
+          </button>
+          <button
+            onClick={calibrate}
+            disabled={status !== "running" || !faceDetected}
+            className={`${BUTTON_BASE} bg-[#BEA7E5] text-[#4b2f23] hover:bg-[#b497dd] focus-visible:outline-[#BEA7E5]`}
+          >
+            Calibrate (open eyes)
+          </button>
+
+          <div className="w-full rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/80 px-4 py-3 text-base text-[#4b2f23] shadow-sm md:ml-auto md:w-auto md:px-6">
+            <div className="flex flex-wrap items-center gap-4">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  className="h-5 w-5 accent-[#6b4b3e]"
+                  checked={voiceOn}
+                  onChange={(e) => setVoiceOn(e.target.checked)}
+                />
+                Voice prompts
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  className="h-5 w-5 accent-[#6b4b3e]"
+                  checked={simpleMode}
+                  onChange={(e) => setSimpleMode(e.target.checked)}
+                />
+                Simple mode
+              </label>
+            </div>
           </div>
         </div>
 
-        {!simpleMode && (
-          <div className="mt-3 grid grid-cols-3 md:grid-cols-6 gap-2 text-sm">
-            <LV label="Face"  value={faceDetected ? "Yes" : "No"} />
-            <LV label="EAR"   value={metrics.EAR.toFixed(3)} />
-            <LV label="MAR"   value={metrics.MAR.toFixed(3)} />
-            <LV label="EB"    value={metrics.EB.toFixed(1)} />
-            <LV label="Blink<th" value={blinkEAR.toFixed(2)} />
-            <LV label="Frames" value={String(framesRequired)} />
+        <div className="rounded-2xl border border-[rgba(190,167,229,0.3)] bg-white/90 p-6 shadow-sm">
+          <div className="text-2xl font-semibold leading-snug text-[#4b2f23] md:text-3xl">
+            <span className="opacity-70">Instruction:&nbsp;</span>
+            <span className="whitespace-pre-line">{instruction}</span>
           </div>
-        )}
-      </div>
-
-      <details className="rounded-xl border p-4 bg-white">
-        <summary className="cursor-pointer font-medium text-lg">Settings (optional)</summary>
-        <div className="grid md:grid-cols-2 gap-4 mt-3">
-          <Slider label={`Blink EAR < ${blinkEAR.toFixed(2)}`} min="0.05" max="0.50" step="0.01" value={blinkEAR} onChange={setBlinkEAR}/>
-          <Slider label={`Smile MAR > ${smileMAR.toFixed(2)}`} min="0.20" max="0.70" step="0.01" value={smileMAR} onChange={setSmileMAR}/>
-          <Slider label={`Brows EB  > ${browsEB.toFixed(0)} px`} min="10" max="60" step="1" value={browsEB} onChange={setBrowsEB}/>
-          <Slider label={`Frames needed: ${framesRequired}`} min="2" max="12" step="1" value={framesRequired} onChange={setFramesRequired}/>
-          <Slider label={`Rest between steps: ${restSeconds}s`} min="0" max="10" step="1" value={restSeconds} onChange={setRestSeconds}/>
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-lg text-[#4b2f23]">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,214,175,0.5)] px-4 py-1 font-semibold text-[#4b2f23]">
+              Status:
+              <span className="capitalize">{status}</span>
+            </span>
+            {status === "rest" && (
+              <span className="rounded-full bg-white/80 px-4 py-1 text-base font-medium text-[#4b2f23]">
+                Next step begins in {restLeft}s
+              </span>
+            )}
+            <span className="ml-auto inline-flex items-center gap-2 rounded-full bg-[rgba(190,167,229,0.4)] px-4 py-1 font-semibold text-[#4b2f23]">
+              Score:
+              <span>{score}</span>
+            </span>
+          </div>
         </div>
-      </details>
+
+        <div className="relative space-y-4 rounded-3xl border border-[rgba(107,75,62,0.15)] bg-white/85 p-4 shadow-lg md:p-6">
+          <video ref={videoRef} className="hidden" playsInline />
+          <div className="relative overflow-hidden rounded-2xl border border-[rgba(107,75,62,0.2)] bg-[#1f1b16]">
+            <canvas ref={canvasRef} className="h-full w-full opacity-95" />
+            <div className="absolute top-5 right-5 text-6xl md:text-7xl drop-shadow-sm">
+              {isOk ? <span className="text-[#6b4b3e]">✅</span> : <span className="text-[#BEA7E5]">❌</span>}
+            </div>
+          </div>
+
+          {!simpleMode && (
+            <div className="grid grid-cols-2 gap-2 text-sm md:grid-cols-6">
+              <LV label="Face" value={faceDetected ? "Yes" : "No"} />
+              <LV label="EAR" value={metrics.EAR.toFixed(3)} />
+              <LV label="MAR" value={metrics.MAR.toFixed(3)} />
+              <LV label="EB" value={metrics.EB.toFixed(1)} />
+              <LV label="Blink<th" value={blinkEAR.toFixed(2)} />
+              <LV label="Frames" value={String(framesRequired)} />
+            </div>
+          )}
+        </div>
+
+        <details className="rounded-2xl border border-[rgba(107,75,62,0.15)] bg-white/85 p-5 shadow-sm">
+          <summary className="cursor-pointer text-lg font-semibold text-[#4b2f23]">
+            Settings (optional)
+          </summary>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <Slider
+              label={`Blink EAR < ${blinkEAR.toFixed(2)}`}
+              min="0.05"
+              max="0.50"
+              step="0.01"
+              value={blinkEAR}
+              onChange={setBlinkEAR}
+            />
+            <Slider
+              label={`Smile MAR > ${smileMAR.toFixed(2)}`}
+              min="0.20"
+              max="0.70"
+              step="0.01"
+              value={smileMAR}
+              onChange={setSmileMAR}
+            />
+            <Slider
+              label={`Brows EB  > ${browsEB.toFixed(0)} px`}
+              min="10"
+              max="60"
+              step="1"
+              value={browsEB}
+              onChange={setBrowsEB}
+            />
+            <Slider
+              label={`Frames needed: ${framesRequired}`}
+              min="2"
+              max="12"
+              step="1"
+              value={framesRequired}
+              onChange={setFramesRequired}
+            />
+            <Slider
+              label={`Rest between steps: ${restSeconds}s`}
+              min="0"
+              max="10"
+              step="1"
+              value={restSeconds}
+              onChange={setRestSeconds}
+            />
+          </div>
+        </details>
+      </div>
     </main>
   );
 }
@@ -380,17 +487,23 @@ async function ensureVideoReady(video) {
 
 function LV({ label, value }) {
   return (
-    <div className="rounded-lg border px-2 py-1 bg-white">
-      <div className="text-[11px] opacity-60">{label}</div>
-      <div className="font-mono">{value}</div>
+    <div className="rounded-xl border border-[#c49e85]/50 bg-[rgba(255,214,175,0.4)] px-3 py-2 text-[#4b2f23]">
+      <div className="text-[11px] uppercase tracking-wide text-[#4b2f23] opacity-60">{label}</div>
+      <div className="font-mono text-sm">{value}</div>
     </div>
   );
 }
 function Slider({ label, value, onChange, ...rest }) {
   return (
-    <label className="text-sm">
-      <div className="mb-1">{label}</div>
-      <input type="range" className="w-full" value={value} onChange={(e)=>onChange(Number(e.target.value))} {...rest}/>
+    <label className="text-sm text-[#4b2f23]">
+      <div className="mb-1 font-medium text-[#4b2f23] opacity-80">{label}</div>
+      <input
+        type="range"
+        className="w-full accent-[#6b4b3e]"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        {...rest}
+      />
     </label>
   );
 }
@@ -416,16 +529,18 @@ function drawGuides(ctx, k) {
 // Elder-friendly rest overlay
 function drawRestOverlay(ctx, nextText, secondsLeft) {
   const w = ctx.canvas.width, h = ctx.canvas.height;
-  ctx.fillStyle = "rgba(0,0,0,0.35)";
+  ctx.fillStyle = "rgba(107,75,62,0.68)";
   ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = "#fff";
+  ctx.fillStyle = PALETTE.lightBrown;
   ctx.textAlign = "center";
-  ctx.font = "bold 32px system-ui";
-  ctx.fillText("Take a short break", w/2, h/2 - 30);
+  ctx.font = "bold 34px system-ui";
+  ctx.fillText("Take a cozy pause", w / 2, h / 2 - 30);
+  ctx.fillStyle = "#fff";
   ctx.font = "24px system-ui";
-  ctx.fillText(`${nextText}`, w/2, h/2 + 4);
-  ctx.font = "bold 56px system-ui";
-  ctx.fillText(`${secondsLeft}s`, w/2, h/2 + 70);
+  ctx.fillText(`${nextText}`, w / 2, h / 2 + 4);
+  ctx.fillStyle = PALETTE.lavender;
+  ctx.font = "bold 60px system-ui";
+  ctx.fillText(`${secondsLeft}s`, w / 2, h / 2 + 80);
 }
 
 // Metrics (EAR / MAR / EB)
