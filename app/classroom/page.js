@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Gamepad2 } from "lucide-react"
+import { User, BookOpen, Brain, Target } from "lucide-react"
 import Image from "next/image"
 import { MainNav } from "@/components/main-nav"
 import {
@@ -31,7 +32,7 @@ export default function ClassroomPage() {
       name: "Memory Game",
       type: "Can you remember the notes?",
       difficulty: "Easy",
-      position: { top: "40%", left: "15%" },
+      position: { top: "50%", left: "15%" },
       route: "/games/memory",
     },
     {
@@ -39,7 +40,7 @@ export default function ClassroomPage() {
       name: "Game4",
       type: "Pattern Match",
       difficulty: "Hard",
-      position: { top: "40%", left: "65%" },
+      position: { top: "50%", left: "65%" },
     },
   ]
 
@@ -75,6 +76,14 @@ export default function ClassroomPage() {
       color: "bg-purple-400",
     },
   ]
+
+  // icon components for each game station (no emoji)
+  const gameIcons = {
+    1: <User className="w-6 h-5 text-gray-800" aria-hidden />,
+    2: <BookOpen className="w-6 h-5 text-gray-800" aria-hidden />,
+    3: <Brain className="w-6 h-5 text-gray-800" aria-hidden />,
+    4: <Target className="w-6 h-5 text-gray-800" aria-hidden />,
+  }
 
   return (
     <div className="min-h-screen bg-yellow-50">
@@ -194,19 +203,20 @@ export default function ClassroomPage() {
                 <div key={station.id} className="absolute" style={station.position}>
                   <Link href={station.route ?? `/games/${station.id}`}>
                     {/* Desk */}
-                    <div className="relative group cursor-pointer w-40 h-32 transform transition-all duration-200 hover:scale-110 hover:shadow-lg hover:-translate-y-1">
+                    <div className="relative group cursor-pointer w-[192px] h-[154px] transform transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-1">
                       <Image
-                        src="/illustrations/desk-multi.svg"
+                        src="/simpleTable.png"
                         alt={`${station.name} desk`}
-                        width={160}
-                        height={128}
+                        width={192}
+                        height={154}
                         className="pointer-events-none select-none w-full h-auto"
                       />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
-                        <div className="text-lg font-bold text-gray-800">{station.name}</div>
-                        <div className="text-xs text-gray-700 text-center font-semibold">{station.type}</div>
-                        <div className="text-xs mt-1 px-2 py-0.5 bg-white rounded border border-gray-300 text-gray-800 font-bold shadow-sm">
-                          {station.difficulty}
+
+                      {/* Centered small white label box (icon + black title) */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="bg-white rounded-md w-28 h-20 flex flex-col items-center justify-center shadow-md">
+                          <div>{gameIcons[station.id] ?? <Gamepad2 className="w-5 h-5 text-gray-800" />}</div>
+                          <div className="text-sm font-bold text-black mt-1">{station.name}</div>
                         </div>
                       </div>
                     </div>
