@@ -16,9 +16,9 @@ export default function Home() {
         </p>
         <div className={styles.buttons}>
           <Link href="/classroom" className={`${styles.button} ${styles.primary}`}>
-            Visit Our Community
+            Visit Our Cozy Community
           </Link>
-          <Link href="/community" className={`${styles.button} ${styles.secondary}`}>
+          <Link href="/medical" className={`${styles.button} ${styles.secondary}`}>
             For Professionals
           </Link>
         </div>
