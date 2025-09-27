@@ -1,6 +1,8 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -165,12 +167,13 @@
 
 @layer base {
   * {
-    border-color: hsl(var(--border));
+
+    @apply border-gray-200 [outline-color:hsl(var(--ring)/0.5)];
   }
   
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    @apply bg-white text-gray-900;
+
     font-size: 18px;
     line-height: 1.6;
   }
