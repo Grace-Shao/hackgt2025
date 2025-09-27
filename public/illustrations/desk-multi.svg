@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Playful classroom desk with multiple chairs - CC0 by Cascade -->
+<svg width="260" height="200" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Main shared desk/table -->
+  <rect x="20" y="50" width="220" height="90" rx="18" ry="18" fill="#FDE047" stroke="#EAB308" stroke-width="3" filter="url(#shadow)"/>
+  <!-- top highlight strip -->
+  <rect x="20" y="60" width="220" height="12" rx="8" fill="#FEF3C7" opacity="0.6"/>
+
+  <!-- Stickers removed as requested -->
+  <!-- Purple outlined white card removed -->
+
+  <!-- Chairs (playful round seats) -->
+  <!-- Green chair -->
+  <g transform="translate(60,150)">
+    <circle r="14" fill="#4ADE80" stroke="#16A34A" stroke-width="3"/>
+    <rect x="-9" y="-24" width="18" height="10" rx="3" fill="#86EFAC" stroke="#16A34A" stroke-width="2"/>
+  </g>
+  <!-- Red chair -->
+  <g transform="translate(130,150)">
+    <circle r="14" fill="#FCA5A5" stroke="#EF4444" stroke-width="3"/>
+    <rect x="-9" y="-24" width="18" height="10" rx="3" fill="#FECACA" stroke="#EF4444" stroke-width="2"/>
+  </g>
+  <!-- Blue chair -->
+  <g transform="translate(200,150)">
+    <circle r="14" fill="#93C5FD" stroke="#3B82F6" stroke-width="3"/>
+    <rect x="-9" y="-24" width="18" height="10" rx="3" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+  </g>
+
+  <!-- Optional legs shadow ellipses for table (subtle, not gray dots on UI) -->
+  <ellipse cx="70" cy="145" rx="12" ry="4" fill="#D1D5DB" opacity="0.35"/>
+  <ellipse cx="190" cy="145" rx="12" ry="4" fill="#D1D5DB" opacity="0.35"/>
+</svg>
