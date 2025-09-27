@@ -1,112 +1,222 @@
 "use client"
 
+import React, { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
 import { Heart, Home, Users, Brain, User, Menu, X, GraduationCap } from "lucide-react"
-import { useState } from "react"
 
 export function MainNav() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navItems = [
-    {
-      href: "/",
-      label: "Home",
-      icon: Home,
-    },
-    {
-      href: "/community",
-      label: "Community",
-      icon: Users,
-    },
-    {
-      href: "/classroom",
-      label: "Classroom",
-      icon: GraduationCap,
-    },
-    {
-      href: "/games",
-      label: "Brain Games",
-      icon: Brain,
-    },
-    {
-      href: "/profile",
-      label: "My Profile",
-      icon: User,
-    },
+    { href: "/", label: "Home", icon: Home },
+    { href: "/community", label: "Community", icon: Users },
+    { href: "/classroom", label: "Classroom", icon: GraduationCap },
+    { href: "/profile", label: "My Profile", icon: User },
   ]
 
   const isActive = (href) => {
-    if (href === "/") {
-      return pathname === "/"
-    }
+    if (href === "/") return pathname === "/"
     return pathname.startsWith(href)
   }
 
+  const headerStyle = {
+    position: "sticky",
+    top: 0,
+    zIndex: 50,
+    borderBottom: "1px solid #e5e7eb",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backdropFilter: "blur(8px)",
+  }
+
+  const containerStyle = {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "16px 24px",
+  }
+
+  const flexStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }
+
+  const logoStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    textDecoration: "none",
+    transition: "opacity 0.2s",
+  }
+
+  const logoIconStyle = {
+    width: "40px",
+    height: "40px",
+    backgroundColor: "#c49e85",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }
+
+  const logoTextStyle = {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "#6b4b3e",
+    margin: 0,
+  }
+
+  const logoSubtextStyle = {
+    fontSize: "12px",
+    color: "#9ca3af",
+    margin: 0,
+  }
+
+  const navStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+  }
+
+  const getButtonStyle = (active) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    padding: "12px 24px",
+    fontSize: "16px",
+    fontWeight: "500",
+    textDecoration: "none",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    transition: "all 0.2s",
+    backgroundColor: active ? "#c49e85" : "transparent",
+    color: active ? "white" : "#6b4b3e",
+    minHeight: "44px",
+  })
+
+  const mobileButtonStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "8px",
+    backgroundColor: "transparent",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    color: "#6b4b3e",
+  }
+
+  const mobileNavStyle = {
+    marginTop: "16px",
+    paddingTop: "16px",
+    paddingBottom: "16px",
+    borderTop: "1px solid #e5e7eb",
+  }
+
+  const mobileNavContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+  }
+
+  const getMobileButtonStyle = (active) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    padding: "16px",
+    fontSize: "16px",
+    fontWeight: "500",
+    textDecoration: "none",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    transition: "all 0.2s",
+    backgroundColor: active ? "#c49e85" : "transparent",
+    color: active ? "white" : "#6b4b3e",
+    justifyContent: "flex-start",
+    width: "100%",
+    minHeight: "44px",
+  })
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+    <header style={headerStyle}>
+      <div style={containerStyle}>
+        <div style={flexStyle}>
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <Heart className="w-5 h-5 text-primary-foreground" />
+          <Link href="/" style={logoStyle}>
+            <div style={logoIconStyle}>
+              <Heart style={{ width: "20px", height: "20px", color: "white" }} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">ElderConnect</h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">Building connections</p>
+              <h1 style={logoTextStyle}>ElderConnect</h1>
+              <p
+                style={{
+                  ...logoSubtextStyle,
+                  display: typeof window !== "undefined" && window.innerWidth >= 640 ? "block" : "none",
+                }}
+              >
+                Building connections
+              </p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav
+            style={{
+              ...navStyle,
+              display: typeof window !== "undefined" && window.innerWidth >= 768 ? "flex" : "none",
+            }}
+          >
             {navItems.map((item) => {
               const Icon = item.icon
               return (
-                <Button
-                  key={item.href}
-                  variant={isActive(item.href) ? "default" : "ghost"}
-                  size="lg"
-                  className="text-base px-6 py-3 h-auto"
-                  asChild
-                >
-                  <Link href={item.href}>
-                    <Icon className="w-4 h-4 mr-2" />
-                    {item.label}
-                  </Link>
-                </Button>
+                <Link key={item.href} href={item.href} style={getButtonStyle(isActive(item.href))}>
+                  <Icon style={{ width: "16px", height: "16px" }} />
+                  {item.label}
+                </Link>
               )
             })}
           </nav>
 
           {/* Mobile Menu Button */}
-          <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </Button>
+          <button
+            style={{
+              ...mobileButtonStyle,
+              display: typeof window !== "undefined" && window.innerWidth >= 768 ? "none" : "flex",
+            }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? (
+              <X style={{ width: "24px", height: "24px" }} />
+            ) : (
+              <Menu style={{ width: "24px", height: "24px" }} />
+            )}
+          </button>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-border pt-4">
-            <div className="flex flex-col gap-2">
+          <nav
+            style={{
+              ...mobileNavStyle,
+              display: typeof window !== "undefined" && window.innerWidth >= 768 ? "none" : "block",
+            }}
+          >
+            <div style={mobileNavContainerStyle}>
               {navItems.map((item) => {
                 const Icon = item.icon
                 return (
-                  <Button
+                  <Link
                     key={item.href}
-                    variant={isActive(item.href) ? "default" : "ghost"}
-                    size="lg"
-                    className="justify-start text-base px-4 py-4 h-auto"
-                    asChild
+                    href={item.href}
+                    style={getMobileButtonStyle(isActive(item.href))}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Link href={item.href}>
-                      <Icon className="w-5 h-5 mr-3" />
-                      {item.label}
-                    </Link>
-                  </Button>
+                    <Icon style={{ width: "20px", height: "20px" }} />
+                    {item.label}
+                  </Link>
                 )
               })}
             </div>
