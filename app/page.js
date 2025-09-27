@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -14,14 +15,14 @@ export default function Home() {
         />
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
+            Blah{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
               app/page.js
             </code>
             .
           </li>
           <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
+            Blah your changes instantly.
           </li>
         </ol>
 
@@ -50,6 +51,22 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+
+        <nav className="mt-6 flex gap-3 items-center flex-wrap">
+          <Link
+            href="/classroom"
+            className="text-sm font-medium underline hover:no-underline"
+          >
+            Classroom
+          </Link>
+
+          <Link
+            href="/games/1"
+            className="text-sm font-medium underline hover:no-underline"
+          >
+            Games (example)
+          </Link>
+        </nav>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
