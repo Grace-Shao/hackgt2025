@@ -51,36 +51,41 @@
     * {
         @apply border-border;
     }
-    
+
     body {
         @apply bg-background text-foreground;
         font-feature-settings: "rlig" 1, "calt" 1;
     }
-    
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         @apply scroll-m-20 tracking-tight;
     }
-    
+
     h1 {
         @apply text-4xl font-extrabold lg:text-5xl;
     }
-    
+
     h2 {
         @apply text-3xl font-semibold;
     }
-    
+
     h3 {
         @apply text-2xl font-semibold;
     }
-    
+
     h4 {
         @apply text-xl font-semibold;
     }
-    
+
     p {
         @apply leading-7;
     }
-    
+
     blockquote {
         @apply mt-6 border-l-2 pl-6 italic;
     }

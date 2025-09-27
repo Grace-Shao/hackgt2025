@@ -24,7 +24,7 @@ const initialPatients = [
         email: "lorem@email.com",
         conditions: ["Alzheimer's", "Dementia"],
         priority: "High",
-        lastSeen: "09/27/2025 8:00PM EST",
+        lastSeen: "Today 8:00 PM",
         hasVideo: true,
         cognitiveScore: 72,
         activities: 8,
@@ -35,7 +35,7 @@ const initialPatients = [
         email: "sarah@email.com",
         conditions: ["Parkinson's"],
         priority: "Medium",
-        lastSeen: "09/26/2025 2:30PM EST",
+        lastSeen: "Yesterday 2:30 PM",
         hasVideo: false,
         cognitiveScore: 85,
         activities: 12,
@@ -46,7 +46,7 @@ const initialPatients = [
         email: "michael@email.com",
         conditions: ["Stroke Recovery"],
         priority: "Low",
-        lastSeen: "09/25/2025 10:15AM EST",
+        lastSeen: "2 days ago",
         hasVideo: false,
         cognitiveScore: 91,
         activities: 15,
@@ -57,7 +57,7 @@ const initialPatients = [
         email: "emma@email.com",
         conditions: ["MCI"],
         priority: "Low",
-        lastSeen: "09/24/2025 4:45PM EST",
+        lastSeen: "3 days ago",
         hasVideo: false,
         cognitiveScore: 78,
         activities: 6,
@@ -68,7 +68,7 @@ const initialPatients = [
         email: "robert@email.com",
         conditions: ["Social"],
         priority: "Low",
-        lastSeen: "09/23/2025 11:20AM EST",
+        lastSeen: "4 days ago",
         hasVideo: false,
         cognitiveScore: 88,
         activities: 10,
@@ -79,7 +79,7 @@ const initialPatients = [
         email: "lisa@email.com",
         conditions: ["Alzheimer's"],
         priority: "High",
-        lastSeen: "09/22/2025 3:10PM EST",
+        lastSeen: "5 days ago",
         hasVideo: false,
         cognitiveScore: 65,
         activities: 4,
@@ -90,7 +90,7 @@ const initialPatients = [
         email: "david@email.com",
         conditions: ["Dementia", "Stroke Recovery"],
         priority: "High",
-        lastSeen: "09/21/2025 9:30AM EST",
+        lastSeen: "1 week ago",
         hasVideo: false,
         cognitiveScore: 58,
         activities: 3,
@@ -484,7 +484,7 @@ export function PatientDashboard() {
                                 id="lastSeen"
                                 value={editForm.lastSeen}
                                 onChange={(e) => setEditForm((prev) => ({ ...prev, lastSeen: e.target.value }))}
-                                placeholder="MM/DD/YYYY HH:MM AM/PM EST"
+                                placeholder="e.g., Today 3:00 PM, Yesterday, 2 days ago"
                             />
                         </div>
                     </div>
