@@ -1,62 +1,144 @@
-/* Simplified CSS with essential styles only */
-.container {
-  min-height: 100vh;
-  background-color: #fefefe;
+/* If you keep global variables inside a CSS Module, wrap global selectors */
+.vars {               /* local class = satisfies the “pure” rule */
+  :global(:root) {
+    --brown-900:#6b4b3e;
+    --brown-500:#c49e85;
+    --peach-200:#ffd6af;
+    --lav-300:#bea7e5;
+    --bg:#e0bf9f;
+    --bg2:#d4ad8a;
+    --paper:#ffffff;
+  }
 }
 
-.hero {
-  padding: 4rem 1rem;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
+/* Page with warm gradient + soft vignette */
+.page{
+  min-height:100svh;
+  background: radial-gradient(1200px 800px at 50% -200px, var(--bg) 0%, var(--bg2) 55%, #d0ab8b 100%);
+  position:relative;
+  overflow:hidden;
 }
 
-.heart {
-  width: 60px;
-  height: 60px;
-  color: #c49e85;
-  margin: 0 auto 2rem;
+/* floating lavender dots like the mock */
+.bgDots{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(120px 120px at 18% 38%, rgba(190,167,229,.35) 0, rgba(190,167,229,.0) 70%) ,
+    radial-gradient(140px 140px at 87% 29%, rgba(190,167,229,.35) 0, rgba(190,167,229,.0) 70%),
+    radial-gradient(110px 110px at 78% 70%, rgba(0,0,0,.05) 0, rgba(0,0,0,0) 70%),
+    radial-gradient(95px 95px at 35% 65%, rgba(0,0,0,.05) 0, rgba(0,0,0,0) 70%);
+  filter: blur(.2px);
 }
 
-.title {
-  font-family: "Caveat", cursive;
-  font-size: 3rem;
-  color: #6b4b3e;
-  margin-bottom: 1.5rem;
+/* Centered hero stack */
+.hero{
+  max-width:1100px;
+  margin:0 auto;
+  padding:64px 20px 72px;
+  text-align:center;
+  color:var(--brown-900);
 }
 
-.description {
-  font-size: 1.25rem;
-  color: #8b7355;
-  margin-bottom: 2rem;
-  line-height: 1.6;
+/* Lavender logo bubble with soft glow */
+.logoBubble{
+  width:128px; height:128px;
+  margin:52px auto 18px;
+  border-radius:999px;
+  background:var(--lav-300);
+  display:grid; place-items:center;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.12),
+    inset 0 4px 18px rgba(255,255,255,.35);
+}
+.logoIcon{ width:56px; height:56px; color:white; stroke-width:2.5; }
+
+/* Big brand wordmark */
+.brand{
+  /* If you used next/font, this picks it up; otherwise the browser serif */
+  font-family: var(--font-playfair), "Times New Roman", serif;
+  font-weight:900;
+  font-size: clamp(40px, 6.2vw, 72px);
+  letter-spacing:.2px;
+  margin:10px 0 18px;
+  color:var(--brown-900);
+  text-shadow: 0 3px 18px rgba(0,0,0,.08);
 }
 
-.buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
+/* CTA row */
+.ctaRow{ display:flex; justify-content:center; margin: 14px 0 34px; }
+.cta{
+  display:inline-flex; align-items:center; gap:.6rem;
+  padding:14px 22px; border-radius:14px;
+  font-weight:700; text-decoration:none;
+  min-height:48px;
+  transition: transform .12s ease, box-shadow .12s ease;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+.ctaPrimary{
+  background:var(--lav-300);
+  color:white;
+  box-shadow: 0 10px 22px rgba(107,75,62,.18);
+}
+.ctaPrimary:hover{ transform:translateY(-1px); box-shadow: 0 14px 26px rgba(107,75,62,.22); }
+.ctaEmoji{ font-size:1.05rem; }
+
+/* Features row */
+.features{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap:22px;
+  margin: 8px 0 18px;
+}
+@media (max-width: 960px){
+  .features{ grid-template-columns:1fr; max-width:680px; margin-inline:auto; }
 }
 
-.button {
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  text-decoration: none;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Feature cards */
+.card{
+  background:var(--paper);
+  border-radius:18px;
+  padding:26px 22px 24px;
+  box-shadow:
+    0 12px 28px rgba(107,75,62,.10),
+    0 2px 0 rgba(255,255,255,.6) inset;
+  border:1px solid rgba(107,75,62,.10);
+}
+.cardIconWrap{
+  width:48px; height:48px; margin:0 auto 12px; border-radius:12px;
+  background:var(--peach-200);
+  display:grid; place-items:center;
+}
+.cardIcon{ width:26px; height:26px; color:var(--brown-900); }
+.cardTitle{
+  font-weight:700; margin:6px 0 8px;
+  letter-spacing:.2px;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+.cardText{
+  color:#7b6757;
+  line-height:1.55;
+  max-width:36ch;
+  margin:0 auto;
+  font-family: var(--font-inter), system-ui, sans-serif;
 }
 
-.primary {
-  background-color: #c49e85;
-  color: white;
+/* Tagline */
+.tagline{
+  margin: 12px auto 6px;
+  color:#866e5b;
+  font-size:.98rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
 }
 
-.secondary {
-  background-color: #ffd6af;
-  color: #6b4b3e;
-  border: 2px solid #c49e85;
+/* Secondary text link under cards (subtle) */
+.secondaryRow{ margin-top:6px; }
+.secondaryLink{
+  color:#6b4b3e;
+  opacity:.8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-family: var(--font-inter), system-ui, sans-serif;
 }
+.secondaryLink:hover{ opacity:1; }

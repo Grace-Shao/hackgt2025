@@ -1,0 +1,169 @@
+/* board wrapper with vignette */
+.boardWrap {
+  position: relative;
+  border-radius: 20px;
+  padding: 12px;
+  background: radial-gradient(1300px 900px at 50% -250px, rgba(0,0,0,.12) 0%, rgba(0,0,0,0) 45%);
+}
+
+/* tiled cafe floor */
+.board {
+  position: relative;
+  height: clamp(480px, 68vh, 720px);
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    radial-gradient(1000px 400px at 20% -200px, rgba(0,0,0,.12) 0px, rgba(0,0,0,0) 70%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,.04) 0 24px, rgba(0,0,0,0) 24px 48px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.28) 0 24px, rgba(255,255,255,0) 24px 48px),
+    linear-gradient(#d7b48a, #caa27f);
+  box-shadow:
+    0 30px 50px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.5);
+  border: 1px solid rgba(107,75,62,.16);
+}
+
+/* little counter/coffee bar (top-left) */
+.counter {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 66px;
+  height: 96px;
+  border-radius: 10px;
+  background: linear-gradient(#9a6039, #6b3b24);
+  box-shadow: 0 8px 16px rgba(0,0,0,.18), inset 0 2px 0 rgba(255,255,255,.35);
+  border: 1px solid rgba(0,0,0,.2);
+}
+.counterBadge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 22px;
+  font-size: 10px;
+  border-radius: 999px;
+  background: #ffd6af;
+  color: #6b4b3e;
+  box-shadow: 0 2px 0 rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.8);
+  border: 1px solid rgba(0,0,0,.12);
+}
+
+/* stations */
+.station {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.signWrap {
+  position: relative;
+  width: 160px;
+  height: 128px;
+  display: grid;
+  place-items: center;
+  transition: transform .15s ease, filter .15s ease;
+}
+.signWrap:focus-visible,
+.signWrap:has(:focus-visible),
+.station a:focus-visible .signWrap {
+  outline: none;
+  filter: drop-shadow(0 0 0.35rem rgba(196,158,133,.6));
+  transform: translateY(-2px);
+}
+.station a:hover .signWrap {
+  transform: translateY(-2px) scale(1.02);
+  filter: drop-shadow(0 10px 16px rgba(107,75,62,.25));
+}
+
+.signImg {
+  pointer-events: none;
+  user-select: none;
+  width: 160px;
+  height: auto;
+}
+
+/* CSS sign fallback (drawn if SVG is missing) */
+.cssSign {
+  position: absolute;
+  inset: auto 0 12px 0;
+  margin: auto;
+  width: 140px;
+  height: 70px;
+  border-radius: 10px;
+  background: linear-gradient(#fffcf8, #f6eee4);
+  border: 2px solid #b17857;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.9), 0 6px 10px rgba(0,0,0,.15);
+}
+.cssSign::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 14px;
+  border-radius: 6px;
+  background: #c49e85;
+  border: 2px solid #9f806c;
+}
+
+/* sign label & pill */
+.signLabel {
+  position: absolute;
+  inset: auto 0 24px 0;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+}
+.diffPill {
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ffd6af;
+  color: #6b4b3e;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
+
+/* little plants / circles, etc. */
+.decor {
+  position: absolute;
+  transform: translate(-50%,-50%);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.6);
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
+}
+
+/* tiny door at bottom center */
+.door {
+  position: absolute;
+  left: 50%;
+  bottom: 2.5%;
+  transform: translateX(-50%);
+  width: 48px; height: 12px;
+  border-radius: 8px 8px 0 0;
+  background: #d08b2f;
+  border: 1px solid #a96e23;
+  box-shadow: 0 2px 0 rgba(255,255,255,.6) inset;
+}
+
+/* responsive tweaks */
+@media (max-width: 860px) {
+  .signWrap { width: 140px; height: 112px; }
+  .cssSign { width: 128px; height: 64px; }
+}
+@media (max-width: 640px) {
+  .signWrap { width: 120px; height: 96px; }
+  .cssSign  { width: 112px; height: 56px; }
+}
