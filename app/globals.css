@@ -3,138 +3,85 @@
 @tailwind utilities;
 
 :root {
-    /* Updated to cozy coffee theme with warm browns, peach, and lavender accents */
-    /* Making background lighter and more white */
-    --background: 0 0% 99.6%;
-    /* Much lighter, almost pure white background */
-    --foreground: 25 35% 35%;
-    /* Darker brown for text (#6b4b3e) */
-    --card: 39 100% 85%;
-    /* Light orange - soft peachy card backgrounds (#ffd6af) */
-    --card-foreground: 25 35% 35%;
-    /* Brown text on peach cards */
-    /* Making popover background lighter too */
-    --popover: 0 0% 99.6%;
-    /* Lighter white for popovers */
-    --popover-foreground: 25 35% 35%;
-    /* Brown text */
-    --primary: 25 25% 65%;
-    /* Lion - warm medium brown primary (#c49e85) */
-    --primary-foreground: 300 20% 97%;
-    /* Light text on brown buttons (#f8f4f9) */
-    --secondary: 260 35% 78%;
-    /* Wisteria - soft lavender secondary (#bea7e5) */
-    --secondary-foreground: 25 35% 35%;
-    /* Brown text on lavender */
-    --muted: 39 100% 85%;
-    /* Light peach for muted elements */
-    --muted-foreground: 25 35% 35%;
-    /* Brown muted text */
-    --accent: 260 35% 78%;
-    /* Wisteria lavender for accents */
-    --accent-foreground: 25 35% 35%;
-    /* Brown on lavender accents */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
-    /* Keep warm red for destructive */
-    --destructive-foreground: 300 20% 97%;
-    /* Light text on red */
-    --border: 25 25% 65%;
-    /* Warm brown borders */
-    --input: 39 100% 85%;
-    /* Peach input backgrounds */
-    --ring: 25 25% 65%;
-    /* Brown focus rings */
-    --radius: 0.75rem;
-    /* Slightly larger radius for friendlier feel */
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
 }
 
 .dark {
-    /* Updated dark mode to complement coffee theme */
-    --background: 25 35% 35%;
-    /* Brown background (#6b4b3e) */
-    --foreground: 300 20% 97%;
-    /* Light text (#f8f4f9) */
-    --card: 25 25% 65%;
-    /* Medium brown cards (#c49e85) */
-    --card-foreground: 300 20% 97%;
-    /* Light text on cards */
-    --popover: 25 35% 35%;
-    /* Brown popovers */
-    --popover-foreground: 300 20% 97%;
-    /* Light text */
-    --primary: 39 100% 85%;
-    /* Peach primary in dark mode (#ffd6af) */
-    --primary-foreground: 25 35% 35%;
-    /* Brown text on peach */
-    --secondary: 260 35% 78%;
-    /* Lavender secondary (#bea7e5) */
-    --secondary-foreground: 25 35% 35%;
-    /* Brown text on lavender */
-    --muted: 25 25% 65%;
-    /* Medium brown muted */
-    --muted-foreground: 300 20% 97%;
-    /* Light muted text */
-    --accent: 260 35% 78%;
-    /* Lavender accent */
-    --accent-foreground: 25 35% 35%;
-    /* Brown text on lavender */
-    --destructive: 0 84.2% 60.2%;
-    /* Keep red */
-    --destructive-foreground: 300 20% 97%;
-    /* Light text */
-    --border: 25 25% 65%;
-    /* Brown borders */
-    --input: 25 25% 65%;
-    /* Brown inputs */
-    --ring: 39 100% 85%;
-    /* Peach focus rings */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
 }
 
 @layer base {
     * {
-        @apply border-border outline-ring/50;
+        @apply border-border;
     }
-
+    
     body {
         @apply bg-background text-foreground;
-        /* Larger base font size for elderly users */
-        font-size: 18px;
-        line-height: 1.6;
+        font-feature-settings: "rlig" 1, "calt" 1;
     }
-
-    /* Enhanced accessibility for elderly users */
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply text-balance;
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply scroll-m-20 tracking-tight;
     }
-
+    
+    h1 {
+        @apply text-4xl font-extrabold lg:text-5xl;
+    }
+    
+    h2 {
+        @apply text-3xl font-semibold;
+    }
+    
+    h3 {
+        @apply text-2xl font-semibold;
+    }
+    
+    h4 {
+        @apply text-xl font-semibold;
+    }
+    
     p {
-        @apply text-pretty;
+        @apply leading-7;
     }
-
-    /* Larger interactive elements */
-    button,
-    a {
-        min-height: 44px;
-        min-width: 44px;
-    }
-
-    /* Wooden floor pattern using coffee theme colors */
-    .wooden-floor {
-        background-image: linear-gradient(90deg, #c49e85 1px, transparent 1px),
-            linear-gradient(#6b4b3e 1px, transparent 1px),
-            linear-gradient(45deg, #ffd6af 25%, transparent 25%),
-            linear-gradient(-45deg, #f8f4f9 25%, transparent 25%);
-        background-size: 120px 120px, 120px 120px, 60px 60px, 60px 60px;
-        background-position: 0 0, 0 0, 0 0, 30px 30px;
-    }
-
-    /* Soft shadow using coffee theme brown */
-    .soft-shadow {
-        filter: drop-shadow(0 8px 16px rgba(107, 75, 62, 0.15));
+    
+    blockquote {
+        @apply mt-6 border-l-2 pl-6 italic;
     }
 }
