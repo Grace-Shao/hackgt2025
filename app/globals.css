@@ -1,4 +1,8 @@
-@import "tailwindcss";
+/* ✅ v3 style */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -121,11 +125,10 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-gray-200 [outline-color:hsl(var(--ring)/0.5)];
   }
   body {
-    @apply bg-background text-foreground;
-    /* Larger base font size for elderly users */
+    @apply bg-white text-gray-900;
     font-size: 18px;
     line-height: 1.6;
   }
