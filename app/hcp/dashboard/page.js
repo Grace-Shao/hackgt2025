@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   LineChart,
@@ -18,17 +18,7 @@ import {
   Radar,
 } from "recharts";
 
-/**
- * Healthcare Professional Side Dashboard
- * Route suggestion: app/hcp/dashboard/page.js
- * - Big client name at top
- * - Metrics box with tabs for conditions (fake data)
- * - Patient notes box (dates list on left, note content on right)
- * - Right sidebar with an "AI Assistant" placeholder box
- *
- * Styling: Tailwind (clean, modern). Charts: Recharts.
- */
-
+/* ---------------- theme ---------------- */
 const PALETTE = {
   darkBrown: "#6b4b3e",
   tan: "#c49e85",
@@ -36,18 +26,18 @@ const PALETTE = {
   background: "#f8f4f9",
 };
 
-// ---- Fake domain data -------------------------------------------------------
-const CONDITIONS = [
-  "Alzheimer's",
+/* ---------------- ordered tabs ---------------- */
+const TABS = [
+  "All",
   "Dementia",
+  "Alzheimer's",
   "Parkinson's",
+  "Stroke Recovery",
   "MCI",
-  "Depression",
-  "Anxiety",
-  "PTSD",
-  "Bipolar",
+  "Social",
 ];
 
+/* ---------------- metric definitions ---------------- */
 const METRIC_DEFS = {
   "Alzheimer's": {
     primary: { key: "MMSE", label: "MMSE Score" },
@@ -69,30 +59,21 @@ const METRIC_DEFS = {
     secondary: { key: "HVLT", label: "HVLT Total" },
     radar: ["Memory", "Attention", "Language", "Abstraction", "Orientation"],
   },
-  Depression: {
-    primary: { key: "PHQ9", label: "PHQ-9" },
-    secondary: { key: "HAMD", label: "HAM-D" },
-    radar: ["Mood", "Sleep", "Energy", "Concentration", "Anhedonia"],
+  // Added so those tabs render real charts
+  "Stroke Recovery": {
+    primary: { key: "NIHSS", label: "NIH Stroke Scale" },
+    secondary: { key: "FMA", label: "Fugl-Meyer (UE)" },
+    radar: ["Motor", "Speech", "Sensation", "ADL", "Balance"],
   },
-  Anxiety: {
-    primary: { key: "GAD7", label: "GAD-7" },
-    secondary: { key: "BAI", label: "BAI" },
-    radar: ["Worry", "Restlessness", "Somatic", "Irritability", "Tension"],
-  },
-  PTSD: {
-    primary: { key: "PCL5", label: "PCL-5" },
-    secondary: { key: "CAPS", label: "CAPS-5" },
-    radar: ["Intrusion", "Avoidance", "Negative Mood", "Arousal", "Dissociation"],
-  },
-  Bipolar: {
-    primary: { key: "YMRS", label: "YMRS" },
-    secondary: { key: "MADRS", label: "MADRS" },
-    radar: ["Mood", "Activity", "Sleep", "Thought", "Insight"],
+  Social: {
+    primary: { key: "ENGAGE", label: "Engagement Score" },
+    secondary: { key: "MOOD", label: "Mood Index" },
+    radar: ["Conversation", "Group", "Family", "Activities", "Confidence"],
   },
 };
 
+/* ---------------- fake data helpers ---------------- */
 function seededRand(seed) {
-  // deterministic random for fake data generation
   let x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 }
@@ -121,6 +102,7 @@ function genRadar(condition) {
   }));
 }
 
+/* ---------------- sample notes ---------------- */
 const NOTES = [
   {
     date: "2025-09-25",
@@ -145,7 +127,7 @@ const NOTES = [
   },
 ];
 
-// ---- Components -------------------------------------------------------------
+/* ---------------- small UI ---------------- */
 function MetricStat({ label, value, unit }) {
   return (
     <div className="rounded-xl border border-[#6b4b3e] bg-white p-4 text-[#6b4b3e]">
@@ -160,11 +142,7 @@ function MetricStat({ label, value, unit }) {
   );
 }
 
-function MetricsPanel({ condition }) {
-  const def = METRIC_DEFS[condition];
-  const trend = useMemo(() => genTrend(condition), [condition]);
-  const radar = useMemo(() => genRadar(condition), [condition]);
-
+function MetricsPanel({ def, trend, radar }) {
   const latest = trend[trend.length - 1] ?? {};
   const primaryVal = latest[def.primary.key] ?? 0;
   const secondaryVal = latest[def.secondary.key] ?? 0;
@@ -182,14 +160,28 @@ function MetricsPanel({ condition }) {
       {/* Charts */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="rounded-xl border border-[#6b4b3e] bg-white p-3">
-          <div className="mb-2 text-sm font-semibold">{def.primary.label} — 12‑week trend</div>
+          <div className="mb-2 text-sm font-semibold">
+            {def.primary.label} — 12-week trend
+          </div>
           <div className="h-56">
             <ResponsiveContainer>
               <LineChart data={trend}>
                 <CartesianGrid strokeDasharray="3 3" stroke={PALETTE.tan} />
-                <XAxis dataKey="week" tick={{ fill: PALETTE.darkBrown }} stroke={PALETTE.darkBrown} />
-                <YAxis tick={{ fill: PALETTE.darkBrown }} stroke={PALETTE.darkBrown} />
-                <Tooltip contentStyle={{ borderColor: PALETTE.darkBrown, color: PALETTE.darkBrown }} />
+                <XAxis
+                  dataKey="week"
+                  tick={{ fill: PALETTE.darkBrown }}
+                  stroke={PALETTE.darkBrown}
+                />
+                <YAxis
+                  tick={{ fill: PALETTE.darkBrown }}
+                  stroke={PALETTE.darkBrown}
+                />
+                <Tooltip
+                  contentStyle={{
+                    borderColor: PALETTE.darkBrown,
+                    color: PALETTE.darkBrown,
+                  }}
+                />
                 <Line
                   type="monotone"
                   dataKey={def.primary.key}
@@ -203,14 +195,28 @@ function MetricsPanel({ condition }) {
         </div>
 
         <div className="rounded-xl border border-[#6b4b3e] bg-white p-3">
-          <div className="mb-2 text-sm font-semibold">{def.secondary.label} — recent distribution</div>
+          <div className="mb-2 text-sm font-semibold">
+            {def.secondary.label} — recent distribution
+          </div>
           <div className="h-56">
             <ResponsiveContainer>
               <BarChart data={trend}>
                 <CartesianGrid strokeDasharray="3 3" stroke={PALETTE.tan} />
-                <XAxis dataKey="week" tick={{ fill: PALETTE.darkBrown }} stroke={PALETTE.darkBrown} />
-                <YAxis tick={{ fill: PALETTE.darkBrown }} stroke={PALETTE.darkBrown} />
-                <Tooltip contentStyle={{ borderColor: PALETTE.darkBrown, color: PALETTE.darkBrown }} />
+                <XAxis
+                  dataKey="week"
+                  tick={{ fill: PALETTE.darkBrown }}
+                  stroke={PALETTE.darkBrown}
+                />
+                <YAxis
+                  tick={{ fill: PALETTE.darkBrown }}
+                  stroke={PALETTE.darkBrown}
+                />
+                <Tooltip
+                  contentStyle={{
+                    borderColor: PALETTE.darkBrown,
+                    color: PALETTE.darkBrown,
+                  }}
+                />
                 <Bar dataKey={def.secondary.key} fill={PALETTE.tan} />
               </BarChart>
             </ResponsiveContainer>
@@ -223,10 +229,28 @@ function MetricsPanel({ condition }) {
             <ResponsiveContainer>
               <RadarChart data={radar} outerRadius="70%">
                 <PolarGrid stroke={PALETTE.tan} />
-                <PolarAngleAxis dataKey="axis" tick={{ fill: PALETTE.darkBrown }} stroke={PALETTE.darkBrown} />
-                <PolarRadiusAxis stroke={PALETTE.darkBrown} tick={{ fill: PALETTE.darkBrown }} />
-                <Radar name="Score" dataKey="score" fill={PALETTE.tan} fillOpacity={0.3} stroke={PALETTE.darkBrown} />
-                <Tooltip contentStyle={{ borderColor: PALETTE.darkBrown, color: PALETTE.darkBrown }} />
+                <PolarAngleAxis
+                  dataKey="axis"
+                  tick={{ fill: PALETTE.darkBrown }}
+                  stroke={PALETTE.darkBrown}
+                />
+                <PolarRadiusAxis
+                  stroke={PALETTE.darkBrown}
+                  tick={{ fill: PALETTE.darkBrown }}
+                />
+                <Radar
+                  name="Score"
+                  dataKey="score"
+                  fill={PALETTE.tan}
+                  fillOpacity={0.3}
+                  stroke={PALETTE.darkBrown}
+                />
+                <Tooltip
+                  contentStyle={{
+                    borderColor: PALETTE.darkBrown,
+                    color: PALETTE.darkBrown,
+                  }}
+                />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -268,7 +292,9 @@ function PatientNotes() {
 
         {/* Note body */}
         <div className="p-4 md:col-span-2">
-          <div className="text-sm opacity-80">{new Date(note.date).toLocaleString()}</div>
+          <div className="text-sm opacity-80">
+            {new Date(note.date).toLocaleString()}
+          </div>
           <h4 className="mt-1 text-xl font-bold">{note.title}</h4>
           <div className="mt-2 flex flex-wrap gap-2">
             {note.tags.map((t) => (
@@ -307,9 +333,294 @@ function Tabs({ tabs, value, onChange }) {
   );
 }
 
+/* ---------------- export helpers ---------------- */
+function csvEscape(v = "") {
+  const s = String(v).replace(/"/g, '""');
+  return /[",\n]/.test(s) ? `"${s}"` : s;
+}
+function buildCSV({ patient, condition, def, trend, ai }) {
+  const head = [
+    ["Patient", patient?.name ?? ""],
+    ["Condition", condition],
+    ["Primary", def.primary.key],
+    ["Secondary", def.secondary.key],
+    ["RiskScore", ai?.risk_score ?? ""],
+    ["RiskLevel", ai?.risk_level ?? ""],
+  ]
+    .map((r) => r.map(csvEscape).join(","))
+    .join("\n");
+
+  const summary = ai?.summary ? `\n\nSummary,\n${csvEscape(ai.summary)}\n` : "\n";
+  const drivers = (ai?.drivers ?? []).map((d) => `- ${d}`).join(" ");
+  const recs = (ai?.recommendations ?? []).map((d) => `- ${d}`).join(" ");
+  const notes = `Drivers,\n${csvEscape(drivers)}\n\nRecommendations,\n${csvEscape(recs)}\n`;
+
+  const trendHeader = `\nTrend,\n${[
+    "Week",
+    def.primary.key,
+    def.secondary.key,
+  ]
+    .map(csvEscape)
+    .join(",")}\n`;
+  const trendRows = trend
+    .map((r) =>
+      [r.week, r[def.primary.key], r[def.secondary.key]]
+        .map(csvEscape)
+        .join(",")
+    )
+    .join("\n");
+
+  return `${head}${summary}${notes}${trendHeader}${trendRows}\n`;
+}
+
+function RiskBadge({ score, level }) {
+  const color =
+    level === "High"
+      ? "bg-red-600"
+      : level === "Medium"
+      ? "bg-yellow-500"
+      : "bg-emerald-600";
+  return (
+    <span
+      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-white ${color}`}
+    >
+      Priority: {level}{" "}
+      <span className="rounded bg-white/20 px-2 py-[2px] text-white">
+        {score}
+      </span>
+    </span>
+  );
+}
+
+function AIAssistantPanel({
+  exportRef,
+  patient,
+  condition,
+  def,
+  trend,
+  radar,
+  notes,
+}) {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [err, setErr] = useState("");
+
+  async function generate() {
+    setLoading(true);
+    setErr("");
+    setResult(null);
+    try {
+      const res = await fetch("/api/ai/cog-summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          patient,
+          condition,
+          primaryKey: def.primary.key,
+          secondaryKey: def.secondary.key,
+          trend,
+          radar,
+          notes,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Failed");
+      setResult(data);
+    } catch (e) {
+      setErr(e.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function exportCSV() {
+    const csv = buildCSV({ patient, condition, def, trend, ai: result });
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${patient?.name ?? "patient"}_${condition}_summary.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function exportPDF() {
+    const { jsPDF } = await import("jspdf");
+    const html2canvas = (await import("html2canvas")).default;
+
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+    doc.setFontSize(16);
+    doc.text(`${patient?.name ?? "Patient"} — ${condition} summary`, 40, 40);
+
+    if (exportRef?.current) {
+      const canvas = await html2canvas(exportRef.current, { scale: 2, useCORS: true });
+      const imgData = canvas.toDataURL("image/png");
+      const pageWidth = doc.internal.pageSize.getWidth() - 80;
+      const pageHeight = doc.internal.pageSize.getHeight() - 120;
+      const imgW = pageWidth;
+      const imgH = canvas.height * (imgW / canvas.width);
+      let y = 70;
+      if (imgH <= pageHeight) {
+        doc.addImage(imgData, "PNG", 40, y, imgW, imgH);
+      } else {
+        let sY = 0;
+        const sliceH = canvas.height * (pageHeight / imgH);
+        while (sY < canvas.height) {
+          const part = document.createElement("canvas");
+          part.width = canvas.width;
+          part.height = Math.min(sliceH, canvas.height - sY);
+          const ctx = part.getContext("2d");
+          ctx.drawImage(
+            canvas,
+            0,
+            sY,
+            canvas.width,
+            part.height,
+            0,
+            0,
+            part.width,
+            part.height
+          );
+          const partData = part.toDataURL("image/png");
+          doc.addImage(partData, "PNG", 40, y, imgW, part.height * (imgW / part.width));
+          sY += sliceH;
+          if (sY < canvas.height) {
+            doc.addPage();
+            y = 40;
+          }
+        }
+      }
+    }
+
+    if (result) {
+      doc.addPage();
+      doc.setFontSize(14);
+      doc.text("AI Summary", 40, 40);
+      doc.setFontSize(11);
+      const wrap = (txt) =>
+        doc.splitTextToSize(txt, doc.internal.pageSize.getWidth() - 80);
+      doc.text(wrap(result.summary || ""), 40, 60);
+
+      if (result.drivers?.length) {
+        doc.setFontSize(12);
+        doc.text("Key drivers", 40, 140);
+        doc.setFontSize(11);
+        result.drivers.forEach((d, i) => doc.text(`• ${d}`, 40, 160 + i * 16));
+      }
+      if (result.recommendations?.length) {
+        const base = 160 + (result.drivers?.length || 0) * 16 + 20;
+        doc.setFontSize(12);
+        doc.text("Recommended next steps", 40, base);
+        doc.setFontSize(11);
+        result.recommendations.forEach((d, i) =>
+          doc.text(`• ${d}`, 40, base + 20 + i * 16)
+        );
+      }
+      doc.setFontSize(10);
+      doc.text(
+        `Priority: ${result.risk_level} (${result.risk_score}) · Confidence ${(result.confidence * 100).toFixed(
+          0
+        )}% · Source: ${result.source}`,
+        40,
+        doc.internal.pageSize.getHeight() - 40
+      );
+    }
+
+    doc.save(`${patient?.name ?? "patient"}_${condition}_summary.pdf`);
+  }
+
+  return (
+    <div className="rounded-2xl border border-[#6b4b3e] bg-white p-4" id="ai-panel">
+      <div className="mb-2 text-lg font-bold">AI Assistant</div>
+
+      {!result && (
+        <div className="mb-3 text-sm opacity-70">
+          Generates a brief patient summary and a priority score (0–100) from the latest metrics and notes.
+          <div className="mt-2 italic text-[12px] opacity-60">Not medical advice.</div>
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={generate}
+          disabled={loading}
+          className="rounded-full border border-[#6b4b3e] px-4 py-2 text-sm font-semibold hover:bg-[#f8f4f9]"
+        >
+          {loading ? "Analyzing…" : "Generate summary"}
+        </button>
+
+        <button
+          type="button"
+          onClick={exportCSV}
+          className="rounded-full border border-[#6b4b3e] px-4 py-2 text-sm font-semibold hover:bg-[#f8f4f9]"
+        >
+          Export CSV
+        </button>
+
+        <button
+          type="button"
+          onClick={exportPDF}
+          className="rounded-full border border-[#6b4b3e] px-4 py-2 text-sm font-semibold hover:bg-[#f8f4f9]"
+        >
+          Export PDF
+        </button>
+      </div>
+
+      {err && <div className="mt-2 text-sm text-red-600">{err}</div>}
+
+      {result && (
+        <div className="mt-3 space-y-3">
+          <RiskBadge score={result.risk_score} level={result.risk_level} />
+          <div className="rounded-lg border border-[#6b4b3e] bg-[#f8f4f9] p-3 text-sm leading-relaxed">
+            {result.summary}
+          </div>
+          {result.drivers?.length > 0 && (
+            <div>
+              <div className="mb-1 text-sm font-semibold">Key drivers</div>
+              <ul className="list-disc space-y-1 pl-5 text-sm">
+                {result.drivers.map((d, i) => (
+                  <li key={i}>{d}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {result.recommendations?.length > 0 && (
+            <div>
+              <div className="mb-1 text-sm font-semibold">Recommended next steps</div>
+              <ul className="list-disc space-y-1 pl-5 text-sm">
+                {result.recommendations.map((d, i) => (
+                  <li key={i}>{d}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className="text-[12px] opacity-60">
+            Confidence: {(result.confidence * 100).toFixed(0)}%
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------------- page ---------------- */
 function HCPDashboard() {
   const [clientName] = useState("Jane Doe");
-  const [condition, setCondition] = useState(CONDITIONS[0]);
+
+  // Tabs in requested order
+  const [tab, setTab] = useState(TABS[0]); // "All"
+
+  // When "All" is selected, display Dementia underneath
+  const displayCondition = tab === "All" ? "Dementia" : tab;
+
+  const def = METRIC_DEFS[displayCondition];
+  const trend = useMemo(() => genTrend(displayCondition), [displayCondition]);
+  const radar = useMemo(() => genRadar(displayCondition), [displayCondition]);
+
+  const exportRef = useRef(null); // area to snapshot for PDF
 
   return (
     <main className="min-h-screen bg-[#f8f4f9] p-6 text-[#6b4b3e] md:p-10">
@@ -317,43 +628,46 @@ function HCPDashboard() {
       <header className="mb-6">
         <h1 className="text-3xl font-extrabold text-[#6b4b3e]">Client: {clientName}</h1>
         <div className="mt-1 text-sm opacity-80">
-          MRN ••••1234 · DOB 1959‑02‑17 · Last visit 2025‑09‑25
+          MRN ••••1234 · DOB 1959-02-17 · Last visit 2025-09-25
         </div>
       </header>
 
-      {/* Layout: main + sidebar */}
-      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-3">
-        {/* Main column (spans 2) */}
-        <section className="space-y-6 xl:col-span-2">
-          {/* Metrics box with tabs */}
-          <div className="rounded-2xl border border-[#6b4b3e] bg-white p-4">
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-xl font-bold">Condition Dashboard</h2>
-              <Tabs tabs={CONDITIONS} value={condition} onChange={setCondition} />
-            </div>
-            <MetricsPanel condition={condition} />
-          </div>
-
-          {/* Patient notes */}
-          <div>
-            <h2 className="mb-3 text-xl font-bold">Patient Notes</h2>
-            <PatientNotes />
-          </div>
-        </section>
-
-        {/* Sidebar */}
-        <aside className="xl:col-span-1">
-          <div className="sticky top-6 rounded-2xl border border-[#6b4b3e] bg-white p-4">
-            <div className="mb-2 text-lg font-bold">AI Assistant</div>
-            <div className="flex h-[520px] items-center justify-center rounded-xl border border-[#6b4b3e] bg-[#f8f4f9]">
-              <div className="text-center opacity-70">
-                <div className="mb-2 text-6xl">💬</div>
-                <div className="font-semibold">AI Assistant</div>
-                <div className="text-sm">(placeholder for ChatGPT integration)</div>
+      {/* Everything below wrapped so html2canvas can snapshot it */}
+      <div ref={exportRef}>
+        <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-3">
+          {/* Main column */}
+          <section className="space-y-6 xl:col-span-2">
+            {/* Metrics box with tabs */}
+            <div className="rounded-2xl border border-[#6b4b3e] bg-white p-4">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h2 className="text-xl font-bold">Condition Dashboard</h2>
+                <Tabs tabs={TABS} value={tab} onChange={setTab} />
               </div>
+              <MetricsPanel def={def} trend={trend} radar={radar} />
             </div>
-          </div>
-        </aside>
+
+            {/* Patient notes */}
+            <div>
+              <h2 className="mb-3 text-xl font-bold">Patient Notes</h2>
+              <PatientNotes />
+            </div>
+          </section>
+
+          {/* Sidebar */}
+          <aside className="xl:col-span-1">
+            <div className="sticky top-6 space-y-4">
+              <AIAssistantPanel
+                exportRef={exportRef}
+                patient={{ name: clientName, age: 66 }}
+                condition={displayCondition}
+                def={def}
+                trend={trend}
+                radar={radar}
+                notes={NOTES}
+              />
+            </div>
+          </aside>
+        </div>
       </div>
     </main>
   );
