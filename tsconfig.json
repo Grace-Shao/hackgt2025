@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/main-nav.jsx"  ],
   "exclude": [
     "node_modules"
   ]
