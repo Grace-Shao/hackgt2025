@@ -1,80 +1,127 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to cozy coffee theme with warm browns, peach, and lavender accents */
-  /* Making background lighter and more white */
-  --background: #fefefe; /* Much lighter, almost pure white background */
-  --foreground: #6b4b3e; /* Back to original darker brown for text */
-  --card: #ffd6af; /* Light orange - soft peachy card backgrounds */
-  --card-foreground: #6b4b3e; /* Original brown text on peach cards */
-  /* Making popover background lighter too */
-  --popover: #fefefe; /* Lighter white for popovers */
-  --popover-foreground: #6b4b3e; /* Original brown text */
-  --primary: #c49e85; /* Lion - warm medium brown primary */
-  --primary-foreground: #f8f4f9; /* Light text on brown buttons */
-  --secondary: #bea7e5; /* Wisteria - soft lavender secondary */
-  --secondary-foreground: #6b4b3e; /* Original brown text on lavender */
-  --muted: #ffd6af; /* Light peach for muted elements */
-  --muted-foreground: #6b4b3e; /* Original brown muted text */
-  --accent: #bea7e5; /* Wisteria lavender for accents */
-  --accent-foreground: #6b4b3e; /* Original brown on lavender accents */
-  --destructive: oklch(0.55 0.18 25); /* Keep warm red for destructive */
-  --destructive-foreground: #f8f4f9; /* Light text on red */
-  --border: #c49e85; /* Warm brown borders */
-  --input: #ffd6af; /* Peach input backgrounds */
-  --ring: #c49e85; /* Brown focus rings */
-  --chart-1: #c49e85; /* Warm brown */
-  --chart-2: #ffd6af; /* Soft peach */
-  --chart-3: #bea7e5; /* Lavender */
-  --chart-4: #6b4b3e; /* Original brown */
-  --chart-5: #f8f4f9; /* Ghost white */
-  --radius: 0.75rem; /* Slightly larger radius for friendlier feel */
-  --sidebar: #ffd6af; /* Peach sidebar */
-  --sidebar-foreground: #6b4b3e; /* Original brown sidebar text */
-  --sidebar-primary: #c49e85; /* Brown sidebar primary */
-  --sidebar-primary-foreground: #f8f4f9; /* Light text */
-  --sidebar-accent: #bea7e5; /* Lavender sidebar accent */
-  --sidebar-accent-foreground: #6b4b3e; /* Original brown text */
-  --sidebar-border: #c49e85; /* Brown sidebar borders */
-  --sidebar-ring: #c49e85; /* Brown sidebar focus rings */
+  /* Coffee theme - cozy and warm for community/patient areas */
+  --background: #fefefe;
+  --foreground: #6b4b3e;
+  --card: #ffd6af;
+  --card-foreground: #6b4b3e;
+  --popover: #fefefe;
+  --popover-foreground: #6b4b3e;
+  --primary: #c49e85;
+  --primary-foreground: #f8f4f9;
+  --secondary: #bea7e5;
+  --secondary-foreground: #6b4b3e;
+  --muted: #ffd6af;
+  --muted-foreground: #6b4b3e;
+  --accent: #bea7e5;
+  --accent-foreground: #6b4b3e;
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: #f8f4f9;
+  --border: #c49e85;
+  --input: #ffd6af;
+  --ring: #c49e85;
+  --chart-1: #c49e85;
+  --chart-2: #ffd6af;
+  --chart-3: #bea7e5;
+  --chart-4: #6b4b3e;
+  --chart-5: #f8f4f9;
+  --radius: 0.75rem;
+  --sidebar: #ffd6af;
+  --sidebar-foreground: #6b4b3e;
+  --sidebar-primary: #c49e85;
+  --sidebar-primary-foreground: #f8f4f9;
+  --sidebar-accent: #bea7e5;
+  --sidebar-accent-foreground: #6b4b3e;
+  --sidebar-border: #c49e85;
+  --sidebar-ring: #c49e85;
+}
+
+/* Medical theme - professional and clean for healthcare dashboard */
+.medical-theme {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(222.2 84% 4.9%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(222.2 84% 4.9%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(222.2 84% 4.9%);
+  --primary: hsl(221.2 83.2% 53.3%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(210 40% 96%);
+  --secondary-foreground: hsl(222.2 84% 4.9%);
+  --muted: hsl(210 40% 96%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(210 40% 96%);
+  --accent-foreground: hsl(222.2 84% 4.9%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(221.2 83.2% 53.3%);
+  --radius: 0.5rem;
 }
 
 .dark {
-  /* Updated dark mode to complement coffee theme */
-  --background: #6b4b3e; /* Original brown background */
-  --foreground: #f8f4f9; /* Light text */
-  --card: #c49e85; /* Medium brown cards */
-  --card-foreground: #f8f4f9; /* Light text on cards */
-  --popover: #6b4b3e; /* Original brown popovers */
-  --popover-foreground: #f8f4f9; /* Light text */
-  --primary: #ffd6af; /* Peach primary in dark mode */
-  --primary-foreground: #6b4b3e; /* Original text on peach */
-  --secondary: #bea7e5; /* Lavender secondary */
-  --secondary-foreground: #6b4b3e; /* Original text on lavender */
-  --muted: #c49e85; /* Medium brown muted */
-  --muted-foreground: #f8f4f9; /* Light muted text */
-  --accent: #bea7e5; /* Lavender accent */
-  --accent-foreground: #6b4b3e; /* Original text on lavender */
-  --destructive: oklch(0.55 0.18 25); /* Keep red */
-  --destructive-foreground: #f8f4f9; /* Light text */
-  --border: #c49e85; /* Brown borders */
-  --input: #c49e85; /* Brown inputs */
-  --ring: #ffd6af; /* Peach focus rings */
-  --chart-1: #ffd6af; /* Peach */
-  --chart-2: #bea7e5; /* Lavender */
-  --chart-3: #c49e85; /* Medium brown */
-  --chart-4: #f8f4f9; /* Light */
-  --chart-5: #6b4b3e; /* Original brown */
-  --sidebar: #c49e85; /* Brown sidebar */
-  --sidebar-foreground: #f8f4f9; /* Light sidebar text */
-  --sidebar-primary: #ffd6af; /* Peach sidebar primary */
-  --sidebar-primary-foreground: #6b4b3e; /* Original text */
-  --sidebar-accent: #bea7e5; /* Lavender sidebar accent */
-  --sidebar-accent-foreground: #6b4b3e; /* Original text */
-  --sidebar-border: #ffd6af; /* Peach sidebar borders */
-  --sidebar-ring: #ffd6af; /* Peach sidebar focus rings */
+  /* Coffee theme dark mode */
+  --background: #6b4b3e;
+  --foreground: #f8f4f9;
+  --card: #c49e85;
+  --card-foreground: #f8f4f9;
+  --popover: #6b4b3e;
+  --popover-foreground: #f8f4f9;
+  --primary: #ffd6af;
+  --primary-foreground: #6b4b3e;
+  --secondary: #bea7e5;
+  --secondary-foreground: #6b4b3e;
+  --muted: #c49e85;
+  --muted-foreground: #f8f4f9;
+  --accent: #bea7e5;
+  --accent-foreground: #6b4b3e;
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: #f8f4f9;
+  --border: #c49e85;
+  --input: #c49e85;
+  --ring: #ffd6af;
+  --chart-1: #ffd6af;
+  --chart-2: #bea7e5;
+  --chart-3: #c49e85;
+  --chart-4: #f8f4f9;
+  --chart-5: #6b4b3e;
+  --sidebar: #c49e85;
+  --sidebar-foreground: #f8f4f9;
+  --sidebar-primary: #ffd6af;
+  --sidebar-primary-foreground: #6b4b3e;
+  --sidebar-accent: #bea7e5;
+  --sidebar-accent-foreground: #6b4b3e;
+  --sidebar-border: #ffd6af;
+  --sidebar-ring: #ffd6af;
+}
+
+/* Medical theme dark mode */
+.medical-theme.dark {
+  --background: hsl(222.2 84% 4.9%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222.2 84% 4.9%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222.2 84% 4.9%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(217.2 91.2% 59.8%);
+  --primary-foreground: hsl(222.2 84% 4.9%);
+  --secondary: hsl(217.2 32.6% 17.5%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+  --accent: hsl(217.2 32.6% 17.5%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(224.3 76.3% 94.1%);
 }
 
 @theme inline {
@@ -105,10 +152,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --border-radius: var(--radius);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -121,46 +165,38 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: hsl(var(--border));
   }
+  
   body {
-    @apply bg-background text-foreground;
-    /* Larger base font size for elderly users */
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-size: 18px;
     line-height: 1.6;
   }
 
   /* Enhanced accessibility for elderly users */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply text-balance;
-  }
-
-  p {
-    @apply text-pretty;
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
   }
 
   /* Larger interactive elements */
-  button,
-  a {
+  button, a {
     min-height: 44px;
     min-width: 44px;
   }
 
-  /* Updated wooden floor to use original brown color */
+  /* Wooden floor pattern using coffee theme colors */
   .wooden-floor {
     background-image: linear-gradient(90deg, #c49e85 1px, transparent 1px),
-      linear-gradient(#6b4b3e 1px, transparent 1px), linear-gradient(45deg, #ffd6af 25%, transparent 25%),
+      linear-gradient(#6b4b3e 1px, transparent 1px), 
+      linear-gradient(45deg, #ffd6af 25%, transparent 25%),
       linear-gradient(-45deg, #f8f4f9 25%, transparent 25%);
     background-size: 120px 120px, 120px 120px, 60px 60px, 60px 60px;
     background-position: 0 0, 0 0, 0 0, 30px 30px;
   }
 
-  /* Updated soft shadow to use original brown color */
+  /* Soft shadow using coffee theme brown */
   .soft-shadow {
     filter: drop-shadow(0 8px 16px rgba(107, 75, 62, 0.15));
   }
