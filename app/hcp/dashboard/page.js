@@ -1,4 +1,6 @@
 "use client";
+
+import { HCPNav } from "@/components/hcp-nav";
 import { useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
@@ -268,7 +270,7 @@ function PatientNotes() {
     <div className="overflow-hidden rounded-xl border border-[#6b4b3e] bg-white text-[#6b4b3e]">
       <div className="grid grid-cols-1 md:grid-cols-3">
         {/* Date list */}
-        <div className="border-r border-[#6b4b3e] bg-[#f8f4f9] p-3 md:max-h-[380px] md:overflow-auto">
+        <div className="border-r border-[#6b4b3e] bg-[#f8f4f9] p-3 md:max-h=[380px] md:overflow-auto">
           <ul className="space-y-2">
             {NOTES.map((n, i) => (
               <li key={n.date}>
@@ -283,7 +285,7 @@ function PatientNotes() {
                   <div className="text-sm font-semibold">
                     {new Date(n.date).toLocaleDateString()}
                   </div>
-                  <div className="text-xs opacity-80 truncate">{n.title}</div>
+                  <div className="truncate text-xs opacity-80">{n.title}</div>
                 </button>
               </li>
             ))}
@@ -381,13 +383,9 @@ function RiskBadge({ score, level }) {
       ? "bg-yellow-500"
       : "bg-emerald-600";
   return (
-    <span
-      className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-white ${color}`}
-    >
+    <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-white ${color}`}>
       Priority: {level}{" "}
-      <span className="rounded bg-white/20 px-2 py-[2px] text-white">
-        {score}
-      </span>
+      <span className="rounded bg-white/20 px-2 py-[2px] text-white">{score}</span>
     </span>
   );
 }
@@ -623,53 +621,66 @@ function HCPDashboard() {
   const exportRef = useRef(null); // area to snapshot for PDF
 
   return (
-    <main className="min-h-screen bg-[#f8f4f9] p-6 text-[#6b4b3e] md:p-10">
-      {/* Header */}
-      <header className="mb-6">
-        <h1 className="text-3xl font-extrabold text-[#6b4b3e]">Client: {clientName}</h1>
-        <div className="mt-1 text-sm opacity-80">
-          MRN ••••1234 · DOB 1959-02-17 · Last visit 2025-09-25
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#f8f4f9] overflow-hidden">
+      {/* NEW: HCP top navigation */}
+      <HCPNav />
 
-      {/* Everything below wrapped so html2canvas can snapshot it */}
-      <div ref={exportRef}>
-        <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-3">
-          {/* Main column */}
-          <section className="space-y-6 xl:col-span-2">
-            {/* Metrics box with tabs */}
-            <div className="rounded-2xl border border-[#6b4b3e] bg-white p-4">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-bold">Condition Dashboard</h2>
-                <Tabs tabs={TABS} value={tab} onChange={setTab} />
+      <main className="relative py-8 px-4 md:px-8 text-[#6b4b3e]">
+        {/* soft blobs for continuity with app style */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute -top-24 -right-16 h-64 w-64 rounded-full bg-[rgba(190,167,229,0.3)] blur-3xl" />
+          <div className="absolute -bottom-28 -left-16 h-80 w-80 rounded-full bg-[rgba(255,214,175,0.3)] blur-3xl" />
+        </div>
+
+        {/* Header */}
+        <header className="relative z-10 mb-6">
+          <h1 className="text-3xl font-extrabold text-[#6b4b3e]">
+            Client: {clientName}
+          </h1>
+          <div className="mt-1 text-sm opacity-80">
+            MRN ••••1234 · DOB 1959-02-17 · Last visit 2025-09-25
+          </div>
+        </header>
+
+        {/* Content wrapped for PDF export */}
+        <div ref={exportRef} className="relative z-10">
+          <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-3">
+            {/* Main column */}
+            <section className="space-y-6 xl:col-span-2">
+              {/* Metrics box with tabs */}
+              <div className="rounded-2xl border border-[#6b4b3e] bg-white p-4">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <h2 className="text-xl font-bold">Condition Dashboard</h2>
+                  <Tabs tabs={TABS} value={tab} onChange={setTab} />
+                </div>
+                <MetricsPanel def={def} trend={trend} radar={radar} />
               </div>
-              <MetricsPanel def={def} trend={trend} radar={radar} />
-            </div>
 
-            {/* Patient notes */}
-            <div>
-              <h2 className="mb-3 text-xl font-bold">Patient Notes</h2>
-              <PatientNotes />
-            </div>
-          </section>
+              {/* Patient notes */}
+              <div>
+                <h2 className="mb-3 text-xl font-bold">Patient Notes</h2>
+                <PatientNotes />
+              </div>
+            </section>
 
-          {/* Sidebar */}
-          <aside className="xl:col-span-1">
-            <div className="sticky top-6 space-y-4">
-              <AIAssistantPanel
-                exportRef={exportRef}
-                patient={{ name: clientName, age: 66 }}
-                condition={displayCondition}
-                def={def}
-                trend={trend}
-                radar={radar}
-                notes={NOTES}
-              />
-            </div>
-          </aside>
+            {/* Sidebar */}
+            <aside className="xl:col-span-1">
+              <div className="sticky top-6 space-y-4">
+                <AIAssistantPanel
+                  exportRef={exportRef}
+                  patient={{ name: clientName, age: 66 }}
+                  condition={displayCondition}
+                  def={def}
+                  trend={trend}
+                  radar={radar}
+                  notes={NOTES}
+                />
+              </div>
+            </aside>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

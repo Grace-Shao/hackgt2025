@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState } from "react"
@@ -10,8 +11,8 @@ export function HCPNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/classroom", label: "Classroom", icon: GraduationCap },
+    { href: "/medical", label: "Home", icon: Home },
+    { href: "/calendar", label: "Calendar", icon: GraduationCap },
     { href: "/profile", label: "My Profile", icon: User },
   ]
 
@@ -171,3 +172,4 @@ export function HCPNav() {
     </header>
   )
 }
+
