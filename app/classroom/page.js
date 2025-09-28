@@ -45,7 +45,7 @@ const stations = [
     title: "Simon Says",
     subtitle: "Recall & remember",
     difficulty: "Easy",
-    pos: { top: "42%", left: "30%" },
+    pos: { top: "47%", left: "30%" },
     href: "/games/face",
     mug: "☕",
   },
@@ -54,7 +54,7 @@ const stations = [
     title: "Word Master",
     subtitle: "Attention trainer",
     difficulty: "Medium",
-    pos: { top: "42%", left: "50%" },
+    pos: { top: "47%", left: "50%" },
     href: "/games/word",
     mug: "🍵",
   },
@@ -63,7 +63,7 @@ const stations = [
     title: "Memory Recall",
     subtitle: "Vocabulary play",
     difficulty: "Medium",
-    pos: { top: "42%", left: "70%" },
+    pos: { top: "47%", left: "70%" },
     href: "/games/memory",
     mug: "☕",
   },
@@ -71,10 +71,10 @@ const stations = [
 
 // icon components for each game station (no emoji)
 const gameIcons = {
-  1: <User className="w-6 h-5 text-gray-800" aria-hidden />,
-  2: <BookOpen className="w-6 h-5 text-gray-800" aria-hidden />,
-  3: <Brain className="w-6 h-5 text-gray-800" aria-hidden />,
-  4: <Target className="w-6 h-5 text-gray-800" aria-hidden />,
+  1: <User className="w-7 h-6 text-gray-800" aria-hidden />,
+  2: <BookOpen className="w-7 h-6 text-gray-800" aria-hidden />,
+  3: <Brain className="w-7 h-6 text-gray-800" aria-hidden />,
+  4: <Target className="w-7 h-6 text-gray-800" aria-hidden />,
 };
 
 /* -------------------- Tiny building blocks -------------------- */
@@ -303,10 +303,14 @@ function BulletinBoard() {
   );
 }
 
-function StringLights() {
+function StringLights({ style = {} }) {
   const bulbs = new Array(14).fill(0);
   return (
-    <div className="absolute" style={{ top: "1%", left: "11%", width: "78%" }} aria-hidden>
+    <div
+      className="absolute"
+      style={{ top: "-1%", left: "11%", width: "78%", zIndex: 30, ...style }}
+      aria-hidden
+    >
       <div style={{ height: 2, background: "rgba(0,0,0,0.35)", borderRadius: 2 }} />
       <div className="flex justify-between -mt-[8px]">
         {bulbs.map((_, i) => (
@@ -342,20 +346,20 @@ function TableStation({ id, title, subtitle, difficulty, href, pos, mug }) {
 
       {/* table image wrapper (from user) */}
       <Link href={href} className="group block focus:outline-none" aria-label={`${title} station`}>
-        <div className="relative group cursor-pointer w-[192px] h-[154px] transform transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-1">
+  <div className="relative group cursor-pointer w-[192px] h-[154px] transform transition-all duration-200 hover:scale-105">
           <Image
-            src="/simpleTable.png"
+            src="/table.png"
             alt={`${title} desk`}
             width={192}
             height={154}
             className="pointer-events-none select-none w-full h-auto"
           />
 
-          {/* Centered small white label box (icon + black title) */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="bg-white rounded-md w-28 h-20 flex flex-col items-center justify-center shadow-md">
-              <div>{gameIcons[id] ?? <Gamepad2 className="w-5 h-5 text-gray-800" />}</div>
-              <div className="text-sm font-bold text-black mt-1">{title}</div>
+          {/* Centered small white label box (icon + black title) moved down 10% */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ transform: 'translateY(10%)' }}>
+            <div className="bg-white rounded-md w-32 h-24 flex flex-col items-center justify-center">
+              <div>{gameIcons[id] ?? <Gamepad2 className="w-7 h-6 text-gray-800" />}</div>
+              <div className="text-base font-bold text-black mt-1">{title}</div>
             </div>
           </div>
         </div>
@@ -416,7 +420,7 @@ export default function ClassroomPage() {
             color: "#6b4b3e",
           }}
         >
-          The Wellness Café
+          Welcome to the Wellness Café
         </h2>
 
         <div className="text-center mb-6">
@@ -475,22 +479,19 @@ export default function ClassroomPage() {
         >
           {/* outer trim */}
           <div className="m-[14px] rounded-[18px] border relative" style={{ borderColor: "rgba(0,0,0,0.12)", background: cozy.woodB }}>
-            <div className="m-[10px] rounded-[14px] border relative h-[600px]" style={{ borderColor: "rgba(0,0,0,0.12)", ...boardFloor }}>
-              {/* Ambient string lights & wall elements */}
-              <StringLights />
-              <CafeDoor />
-              <Bookshelf side="left" tall />
-              <Bookshelf side="left" tall={false} />
-              <Bookshelf side="right" tall />
-              <Bookshelf side="right" tall={false} />
-              <CozyWindow />
-              <BulletinBoard />
-              <WallClock />
-              <FloorLamp />
+            <div className="m-[10px] rounded-[14px] border relative h-[600px] w-[1100px] max-w-full mx-auto overflow-auto hide-scrollbar" style={{ borderColor: "rgba(0,0,0,0.12)", ...boardFloor }}>
+              {/* background image for upper half (place your PNG at public/cafe-upper.png) */}
+              <div className="absolute inset-x-0 top-0 h-[180px] z-0 pointer-events-none overflow-hidden rounded-[12px]">
+                <Image
+                  src="/cafeBG.png"
+                  alt="Cafe upper"
+                  fill
+                  className="w-full h-full"
+                  style={{ objectFit: 'cover', objectPosition: '50% 0%' }}
+                />
+              </div>
 
-              {/* Props */}
-              {/* <CoffeeCart /> */}
-              {/* <CatNapping /> */}
+              <WallClock />
 
               {/* Game tables */}
               {stations.map((s) => (
@@ -498,12 +499,31 @@ export default function ClassroomPage() {
               ))}
 
               {/* Social meeting control */}
-              <div className="absolute" style={{ top: "66%", left: "78%" }} aria-label="social meeting">
-                <SocialMeeting />
+              <div className="absolute" style={{ top: "62%", left: "72%" }} aria-label="social meeting">
+             <div className="flex flex-col items-center">
+                <div className="text-base font-bold text-black -mb-1">Join Social</div>
+              <SocialMeeting />
+             </div>
+              </div>
+              {/* mirrored beanbag on the left (mirrored position of right beanbag) */}
+              <div className="absolute" style={{ top: "62%", left: "0%" }} aria-label="social meeting left">
+             <div className="flex flex-col items-center">
+                <div className="text-base font-bold text-black -mb-1">Join Social</div>
+              <SocialMeeting mirrored />
+             </div>
               </div>
             </div>
+            {/* Place lights above the inner rounded border */}
+            <StringLights />
+            
           </div>
         </div>
+
+        <style jsx>{`
+          /* hide scrollbars on the inner board but keep scrolling functional (scoped to this page) */
+          .hide-scrollbar::-webkit-scrollbar { display: none; }
+          .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        `}</style>
 
         <StatCards />
       </div>
