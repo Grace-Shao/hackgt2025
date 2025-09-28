@@ -11,7 +11,6 @@ export function MainNav() {
 
   const navItems = [
     { href: "/", label: "Home", icon: Home },
-    { href: "/community", label: "Community", icon: Users },
     { href: "/classroom", label: "Classroom", icon: GraduationCap },
     { href: "/profile", label: "My Profile", icon: User },
   ]
@@ -150,7 +149,7 @@ export function MainNav() {
               <Heart style={{ width: "20px", height: "20px", color: "white" }} />
             </div>
             <div>
-              <h1 style={logoTextStyle}>ElderConnect</h1>
+              <h1 style={logoTextStyle}>CogniCare</h1>
               <p style={logoSubtextStyle} className="hidden sm:block">Building connections</p>
             </div>
           </Link>
@@ -167,38 +166,7 @@ export function MainNav() {
               )
             })}
           </nav>
-
-          {/* Mobile Menu Button */}
-          <button style={mobileButtonStyle} className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? (
-              <X style={{ width: "24px", height: "24px" }} />
-            ) : (
-              <Menu style={{ width: "24px", height: "24px" }} />
-            )}
-          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <nav style={mobileNavStyle} className="md:hidden">
-            <div style={mobileNavContainerStyle}>
-              {navItems.map((item) => {
-                const Icon = item.icon
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    style={getMobileButtonStyle(isActive(item.href))}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Icon style={{ width: "20px", height: "20px" }} />
-                    {item.label}
-                  </Link>
-                )
-              })}
-            </div>
-          </nav>
-        )}
       </div>
     </header>
   )

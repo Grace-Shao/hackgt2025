@@ -62,7 +62,7 @@ const stations = [
     subtitle: "Vocabulary play",
     difficulty: "Medium",
     pos: { top: "42%", left: "70%" },
-    href: "/games/word-games/memory",
+    href: "/games/word",
     mug: "☕",
   },
 ];
