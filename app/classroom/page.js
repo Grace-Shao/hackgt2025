@@ -489,10 +489,6 @@ export default function ClassroomPage() {
               {/* Ambient string lights & wall elements */}
               <StringLights />
               <CafeDoor />
-              <Bookshelf side="left" tall />
-              <Bookshelf side="left" tall={false} />
-              <Bookshelf side="right" tall />
-              <Bookshelf side="right" tall={false} />
               <CozyWindow />
               <BulletinBoard />
               <WallClock />
@@ -503,13 +499,11 @@ export default function ClassroomPage() {
               {/* <CatNapping /> */}
 
               {/* Game tables */}
-              {stations.map((s) => (
-                <TableStation key={s.id} {...s} />
-              ))}
+
 
               {/* Social meeting control */}
               <div className="absolute" style={{ top: "66%", left: "78%" }} aria-label="social meeting">
-                <SocialMeeting />
+      
               </div>
             </div>
           </div>
