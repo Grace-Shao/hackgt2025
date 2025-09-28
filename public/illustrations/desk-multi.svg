@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Playful classroom desk with multiple chairs - Flat style, thin black borders (CC0) -->
+<svg width="260" height="200" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Main shared desk/table (flat, no shadow/highlight) -->
+  <rect x="20" y="50" width="220" height="90" rx="18" ry="18" fill="#FDE047" stroke="#000" stroke-width="2"/>
+
+  <!-- Chairs (playful round seats, flat with black outline) -->
+  <!-- Green chair -->
+  <g transform="translate(60,150)">
+    <circle r="14" fill="#4ADE80" stroke="#000" stroke-width="2"/>
+    <rect x="-9" y="-24" width="18" height="10" rx="3" fill="#86EFAC" stroke="#000" stroke-width="2"/>
+  </g>
+  <!-- Red chair -->
+  <g transform="translate(130,150)">
+    <circle r="14" fill="#FCA5A5" stroke="#000" stroke-width="2"/>
+    <rect x="-9" y="-24" width="18" height="10" rx="3" fill="#FECACA" stroke="#000" stroke-width="2"/>
+  </g>
+  <!-- Blue chair -->
+  <g transform="translate(200,150)">
+    <circle r="14" fill="#93C5FD" stroke="#000" stroke-width="2"/>
+    <rect x="-9" y="-24" width="18" height="10" rx="3" fill="#DBEAFE" stroke="#000" stroke-width="2"/>
+  </g>
+
+</svg>

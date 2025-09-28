@@ -1,0 +1,62 @@
+/* Simplified CSS with essential styles only */
+.container {
+  min-height: 100vh;
+  background-color: #fefefe;
+}
+
+.hero {
+  padding: 4rem 1rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heart {
+  width: 60px;
+  height: 60px;
+  color: #c49e85;
+  margin: 0 auto 2rem;
+}
+
+.title {
+  font-family: "Caveat", cursive;
+  font-size: 3rem;
+  color: #6b4b3e;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-size: 1.25rem;
+  color: #8b7355;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary {
+  background-color: #c49e85;
+  color: white;
+}
+
+.secondary {
+  background-color: #ffd6af;
+  color: #6b4b3e;
+  border: 2px solid #c49e85;
+}

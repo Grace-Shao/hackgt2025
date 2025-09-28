@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Purple carpet with 3 green beanbags - Flat style, thin black borders (CC0) -->
+<svg width="260" height="200" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Carpet: rounded rectangle with thin black border and stitched inner border -->
+  <rect x="20" y="50" width="220" height="100" rx="18" ry="18" fill="#A78BFA" stroke="#000" stroke-width="2"/>
+  <rect x="28" y="58" width="204" height="84" rx="14" ry="14" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="6 6"/>
+
+  <!-- Beanbag 1 (left) -->
+  <g transform="translate(60,120) rotate(-8)">
+    <ellipse rx="26" ry="18" fill="#34D399" stroke="#000" stroke-width="2"/>
+    <!-- seams -->
+    <path d="M -18 -6 C -6 -12, 6 -12, 18 -6" fill="none" stroke="#000" stroke-width="2"/>
+    <path d="M -14 6 C 0 12, 0 12, 14 6" fill="none" stroke="#000" stroke-width="2"/>
+  </g>
+
+  <!-- Beanbag 2 (center) -->
+  <g transform="translate(130,90)">
+    <ellipse rx="24" ry="17" fill="#4ADE80" stroke="#000" stroke-width="2"/>
+    <path d="M -16 -5 C -4 -10, 4 -10, 16 -5" fill="none" stroke="#000" stroke-width="2"/>
+    <path d="M -12 5 C 0 9, 0 9, 12 5" fill="none" stroke="#000" stroke-width="2"/>
+  </g>
+
+  <!-- Beanbag 3 (right) -->
+  <g transform="translate(200,120) rotate(8)">
+    <ellipse rx="25" ry="18" fill="#22C55E" stroke="#000" stroke-width="2"/>
+    <path d="M -17 -6 C -5 -12, 5 -12, 17 -6" fill="none" stroke="#000" stroke-width="2"/>
+    <path d="M -13 6 C 0 11, 0 11, 13 6" fill="none" stroke="#000" stroke-width="2"/>
+  </g>
+</svg>
