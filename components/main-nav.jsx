@@ -1,15 +1,10 @@
+
 "use client"
 
 import React, { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Heart, Home, Users, Brain, User, Menu, X, GraduationCap } from "lucide-react"
-
-const NAV_ITEMS = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/classroom", label: "Classroom", icon: GraduationCap },
-  { href: "/profile", label: "My Profile", icon: User },
-]
 
 export function MainNav() {
   const pathname = usePathname()
@@ -44,7 +39,7 @@ export function MainNav() {
   const flexStyle = {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
   }
 
   const logoStyle = {
@@ -53,7 +48,6 @@ export function MainNav() {
     gap: "12px",
     textDecoration: "none",
     transition: "opacity 0.2s",
-    flex: '0 0 auto',
   }
 
   const logoIconStyle = {
@@ -83,8 +77,6 @@ export function MainNav() {
     display: "flex",
     alignItems: "center",
     gap: "8px",
-    flex: '1 1 auto',
-    marginLeft: '24px',
   }
 
   const getButtonStyle = (active) => ({
@@ -127,19 +119,6 @@ export function MainNav() {
     display: "flex",
     flexDirection: "column",
     gap: "8px",
-  }
-
-  const profileButtonStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "40px",
-    height: "40px",
-    borderRadius: "50%",
-    backgroundColor: "#ffffff",
-    border: "2px solid #6b4b3e",
-    boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
-    cursor: "pointer",
   }
 
   const getMobileButtonStyle = (active) => ({
@@ -193,3 +172,4 @@ export function MainNav() {
     </header>
   )
 }
+
