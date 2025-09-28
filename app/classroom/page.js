@@ -42,29 +42,29 @@ const boardFloor = {
 const stations = [
   {
     id: 1,
-    title: "Memory",
+    title: "Simon Says",
     subtitle: "Recall & remember",
     difficulty: "Easy",
     pos: { top: "42%", left: "30%" },
-    href: "/games/memory",
+    href: "/games/face",
     mug: "☕",
   },
   {
     id: 2,
-    title: "Focus",
+    title: "Word Master",
     subtitle: "Attention trainer",
     difficulty: "Medium",
     pos: { top: "42%", left: "50%" },
-    href: "/games/face",
+    href: "/games/word",
     mug: "🍵",
   },
   {
     id: 3,
-    title: "Word",
+    title: "Memory Recall",
     subtitle: "Vocabulary play",
     difficulty: "Medium",
     pos: { top: "42%", left: "70%" },
-    href: "/games/word-games/memory",
+    href: "/games/memory",
     mug: "☕",
   },
 ];
@@ -263,17 +263,17 @@ function WallClock() {
           width: 46,
           height: 46,
           borderRadius: 999,
-          background: "#fff",
+          // background: "#fff",
           border: border1,
           color: cozy.brown900,
           display: "grid",
           placeItems: "center",
           boxShadow: "0 4px 10px rgba(0,0,0,0.14)",
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: 36,
         }}
       >
-        🕘
+        <span style={{ fontSize: 28, lineHeight: '46px' }}>🕘</span>
       </div>
     </div>
   );
@@ -416,7 +416,7 @@ export default function ClassroomPage() {
             color: "#6b4b3e",
           }}
         >
-          Your Wellness Café — Library Room
+          The Wellness Café
         </h2>
 
         <div className="text-center mb-6">
@@ -427,7 +427,7 @@ export default function ClassroomPage() {
                 style={{ backgroundColor: cozy.brown500 }}
               >
                 <Gamepad2 className="w-6 h-6" />
-                How to Play
+                Instructions
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -497,49 +497,9 @@ export default function ClassroomPage() {
                 <TableStation key={s.id} {...s} />
               ))}
 
-              {/* Social circle kept on the right */}
-              <div className="absolute" style={{ top: "66%", left: "78%" }} aria-label="social circle">
-                <div
-                  className="relative flex items-center justify-center rounded-full"
-                  style={{
-                    width: 54,
-                    height: 54,
-                    background: cozy.brown500,
-                    color: "#fff",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                  }}
-                >
-                  ☕
-                  {[
-                    { x: 0, y: -44, t: "C" },
-                    { x: 37, y: -26, t: "D" },
-                    { x: 44, y: 8, t: "" },
-                    { x: 20, y: 38, t: "A" },
-                    { x: -20, y: 38, t: "" },
-                    { x: -44, y: 8, t: "" },
-                    { x: -37, y: -26, t: "" },
-                  ].map((n, i) => (
-                    <div
-                      key={i}
-                      className="absolute flex items-center justify-center rounded-full"
-                      style={{
-                        width: 34,
-                        height: 34,
-                        left: 27 + n.x,
-                        top: 27 + n.y,
-                        background: i % 2 ? cozy.lav300 : "#fff",
-                        border: "1px solid rgba(107,75,62,0.25)",
-                        boxShadow: innerSh,
-                        color: cozy.brown900,
-                        fontSize: 12,
-                        fontWeight: 700,
-                      }}
-                      aria-hidden
-                    >
-                      {n.t}
-                    </div>
-                  ))}
-                </div>
+              {/* Social meeting control */}
+              <div className="absolute" style={{ top: "66%", left: "78%" }} aria-label="social meeting">
+                <SocialMeeting />
               </div>
             </div>
           </div>
