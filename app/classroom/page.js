@@ -476,6 +476,16 @@ export default function ClassroomPage() {
           {/* outer trim */}
           <div className="m-[14px] rounded-[18px] border relative" style={{ borderColor: "rgba(0,0,0,0.12)", background: cozy.woodB }}>
             <div className="m-[10px] rounded-[14px] border relative h-[600px]" style={{ borderColor: "rgba(0,0,0,0.12)", ...boardFloor }}>
+              {/* background image for upper half (place your PNG at public/cafe-upper.png) */}
+              <div className="absolute inset-x-0 top-0 h-[180px] z-0 pointer-events-none overflow-hidden rounded-[12px]">
+                <Image
+                  src="/cafeBG.png"
+                  alt="Cafe upper"
+                  fill
+                  className="w-full h-full"
+                  style={{ objectFit: 'cover', objectPosition: '50% 0%' }}
+                />
+              </div>
               {/* Ambient string lights & wall elements */}
               <StringLights />
               <CafeDoor />
