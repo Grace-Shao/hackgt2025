@@ -255,30 +255,6 @@ function FloorLamp() {
   );
 }
 
-function WallClock() {
-  return (
-    <div className="absolute" style={{ top: "9%", right: "16%" }} aria-hidden>
-      <div
-        style={{
-          width: 46,
-          height: 46,
-          borderRadius: 999,
-          // background: "#fff",
-          border: border1,
-          color: cozy.brown900,
-          display: "grid",
-          placeItems: "center",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.14)",
-          fontWeight: 700,
-          fontSize: 36,
-        }}
-      >
-        <span style={{ fontSize: 28, lineHeight: '46px' }}>🕘</span>
-      </div>
-    </div>
-  );
-}
-
 function BulletinBoard() {
   return (
     <div className="absolute" style={{ top: "9%", right: "25%" }} aria-hidden>
@@ -483,15 +459,13 @@ export default function ClassroomPage() {
               {/* background image for upper half (place your PNG at public/cafe-upper.png) */}
               <div className="absolute inset-x-0 top-0 h-[180px] z-0 pointer-events-none overflow-hidden rounded-[12px]">
                 <Image
-                  src="/cafeBG.png"
+                  src="/cafeBG.jpg"
                   alt="Cafe upper"
                   fill
                   className="w-full h-full"
                   style={{ objectFit: 'cover', objectPosition: '50% 0%' }}
                 />
               </div>
-
-              <WallClock />
 
               {/* Game tables */}
               {stations.map((s) => (
