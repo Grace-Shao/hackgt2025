@@ -14,7 +14,12 @@ const NAV_ITEMS = [
 export function MainNav() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const navItems = NAV_ITEMS
+
+  const navItems = [
+    { href: "/", label: "Home", icon: Home },
+    { href: "/classroom", label: "Classroom", icon: GraduationCap },
+    { href: "/profile", label: "My Profile", icon: User },
+  ]
 
   const isActive = (href) => {
     if (href === "/") return pathname === "/"
@@ -183,12 +188,6 @@ export function MainNav() {
               )
             })}
           </nav>
-          {/* Right-side (profile + mobile) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Link href="/profile" style={profileButtonStyle} className="hidden md:inline-flex" aria-label="Profile">
-              <User style={{ width: '18px', height: '18px', color: '#6b4b3e' }} />
-            </Link>
-          </div>
         </div>
       </div>
     </header>
