@@ -23,7 +23,7 @@ export default function Home() {
 
         {/* Primary CTA */}
         <div className={styles.ctaRow}>
-          <Link href="/classroom" className={`${styles.cta} ${styles.ctaPrimary}`}>
+          <Link href="/login?mode=patient" className={`${styles.cta} ${styles.ctaPrimary}`}>
             <span className={styles.ctaEmoji} aria-hidden>☕</span>
             Visit Our Cozy Community
           </Link>

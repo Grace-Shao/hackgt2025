@@ -1,0 +1,196 @@
+/* Uses your existing CSS variables from :root (lavender, browns, etc.) */
+
+.page{
+  min-height:100svh;
+  background: radial-gradient(1200px 800px at 50% -200px, var(--bg, #e0bf9f) 0%, var(--bg2, #d4ad8a) 55%, #d0ab8b 100%);
+  position:relative;
+  overflow:hidden;
+}
+
+.bgDots{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(110px 110px at 20% 40%, rgba(190,167,229,.25) 0, rgba(190,167,229,0) 70%),
+    radial-gradient(90px 90px at 83% 65%, rgba(255,255,255,.12) 0, rgba(255,255,255,0) 70%),
+    radial-gradient(70px 70px at 35% 75%, rgba(0,0,0,.04) 0, rgba(0,0,0,0) 70%);
+  filter: blur(.3px);
+}
+
+.centerWrap{
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 48px 18px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+.card{
+  width:100%;
+  max-width: 520px;
+  background: var(--paper, #ffffff);
+  border-radius: 26px;
+  padding: 28px 28px 22px;
+  box-shadow:
+    0 30px 70px rgba(107,75,62,.22),
+    0 2px 0 rgba(255,255,255,.7) inset;
+  border: 1px solid rgba(107,75,62,.12);
+}
+
+/* ---------- app icon ---------- */
+.appIcon{
+  display:flex; justify-content:center;
+  margin-top: -12px; margin-bottom: 12px;
+}
+.appIconInner{
+  width: 86px; height: 86px;
+  border-radius: 22px;
+  background: var(--lav-300, #bea7e5);
+  display:grid; place-items:center;
+  position:relative;
+  box-shadow:
+    0 16px 32px rgba(107,75,62,.18),
+    inset 0 6px 18px rgba(255,255,255,.42);
+}
+.appIconBrain{
+  width: 40px; height: 40px;
+  color: #fff; stroke-width: 2.4;
+}
+.appIconSpark{
+  position:absolute; right: 12px; top: 10px;
+  width: 16px; height: 16px;
+  color: #fff; opacity: .9;
+}
+
+/* ---------- headings ---------- */
+.brand{
+  font-family: var(--font-playfair, "Times New Roman", serif);
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 1.1;
+  text-align:center;
+  color: var(--brown-900, #6b4b3e);
+  margin: 6px 0 6px;
+  text-shadow: 0 3px 18px rgba(0,0,0,.08);
+}
+
+.welcomeTitle{
+  text-align:center;
+  color: var(--lav-300, #bea7e5);
+  font-weight: 800;
+  margin: 4px 0;
+}
+.welcomeSub{
+  text-align:center;
+  color:#866e5b;
+  margin: 0 0 14px;
+}
+
+/* ---------- segmented control ---------- */
+.segmented{
+  display:flex;
+  gap:8px;
+  background: #f7f2ff;
+  border: 1.5px solid rgba(190,167,229,.45);
+  border-radius: 14px;
+  padding: 6px;
+  margin: 8px auto 18px;
+}
+.segBtn{
+  flex:1;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #8a6e99; /* lavender text */
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.segBtn:focus-visible{
+  outline: 2px solid rgba(190,167,229,.55);
+  outline-offset: 2px;
+}
+.segActive{
+  background: var(--lav-300, #bea7e5);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(190,167,229,.35);
+}
+.segIcon{ width:16px; height:16px }
+
+/* ---------- form ---------- */
+.form{
+  display:flex; flex-direction:column; gap: 10px;
+  margin-top: 4px;
+}
+.label{
+  font-size: 14px;
+  color: var(--brown-900, #6b4b3e);
+  font-weight: 600;
+  margin-top: 8px;
+}
+.input{
+  width:100%;
+  border-radius: 14px;
+  border: 1.5px solid rgba(107,75,62,.15);
+  background: #fff;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #5a4035;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.65), 0 6px 20px rgba(107,75,62,.06);
+}
+.input:focus{
+  outline: none;
+  border-color: rgba(190,167,229,.65);
+  box-shadow:
+    0 0 0 4px rgba(190,167,229,.18),
+    inset 0 2px 0 rgba(255,255,255,.65);
+}
+
+/* ---------- buttons ---------- */
+.primaryBtn{
+  margin-top: 10px;
+  width:100%;
+  border:0;
+  border-radius: 14px;
+  min-height: 46px;
+  font-weight: 800;
+  background: var(--lav-300, #bea7e5);
+  color: #fff;
+  box-shadow: 0 12px 26px rgba(107,75,62,.18);
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.primaryBtn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(107,75,62,.22);
+}
+
+.ghostBtn{
+  margin-top: 10px;
+  display:inline-flex;
+  align-items:center; justify-content:center;
+  width:100%;
+  min-height: 46px;
+  border-radius: 14px;
+  text-decoration:none;
+  font-weight: 800;
+  color: var(--brown-900, #6b4b3e);
+  border: 2px solid rgba(190,167,229,.65);
+  background: #fff;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.ghostBtn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(107,75,62,.12), 0 0 0 6px rgba(190,167,229,.18);
+}
+
+/* ---------- help text ---------- */
+.helpText{
+  text-align:center;
+  color:#8a7b70;
+  margin: 16px 0 4px;
+  font-size: 14px;
+}

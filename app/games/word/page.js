@@ -161,7 +161,7 @@ function WordGame() {
         <div className="relative z-10 mx-auto flex max-w-5xl flex-col space-y-8">
           <header className="flex flex-col items-start gap-3">
             <h1 className="text-3xl font-extrabold tracking-tight text-[#4b2f23] md:text-4xl">
-              Wordplay Café
+              Word Master
             </h1>
             <p className="max-w-3xl text-lg leading-relaxed text-[#4b2f23] opacity-80">
               Brew a fresh round of letters, listen to the hints, and spell out the surprise word at
