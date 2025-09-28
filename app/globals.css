@@ -7,6 +7,16 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --brown-900:#6b4b3e;
+  --brown-500:#c49e85;
+  --peach-200:#ffd6af;
+  --lav-300:#bea7e5;
+  --bg:#e0bf9f;
+  --bg2:#d4ad8a;
+  --paper:#ffffff;
+}
+
+:root {
   /* Updated to cozy coffee theme with warm browns, peach, and lavender accents */
   /* Making background lighter and more white */
   --background: #fefefe; /* Much lighter, almost pure white background */
