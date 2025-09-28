@@ -1,10 +1,10 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
-import { Users } from "lucide-react"
 
-export default function SocialMeeting() {
+export default function SocialMeeting({ mirrored = false }) {
   const [loading, setLoading] = useState(false)
 
   async function handleCreateMeet(e) {
@@ -42,8 +42,19 @@ export default function SocialMeeting() {
 
   return (
     <div className="relative">
-      <Link href="/meet" aria-label="Open meetings" className="rounded-full w-16 h-16 flex items-center justify-center text-2xl shadow-md bg-amber-300 border border-amber-400 hover:scale-105">
-        <Users className="w-6 h-6 text-[#6b4b3e]" aria-hidden="true" />
+      <Link
+        href="/meeting"
+        aria-label="Open meetings"
+        className="rounded-full w-[260px] h-[260px] flex items-center justify-center hover:scale-105 overflow-hidden transition-shadow duration-200 hover:shadow-[0_6px_12px_rgba(0,0,0,0.18)]"
+      >
+        <Image
+          src="/beanbag.png"
+          alt="Beanbag"
+          width={240}
+          height={240}
+          className="max-w-full max-h-full object-contain"
+          style={mirrored ? { transform: 'scaleX(-1)' } : undefined}
+        />
         <span className="sr-only">Open social meetings</span>
       </Link>
     </div>
