@@ -50,15 +50,16 @@ export function HCPNav() {
     transition: "opacity 0.2s",
   }
 
-  const logoIconStyle = {
-    width: "40px",
-    height: "40px",
-    backgroundColor: "#c49e85",
-    borderRadius: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }
+const logoIconStyle = {
+  width: "40px",
+  height: "40px",
+  borderRadius: "9999px",
+  background: "var(--lav-300)",         
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  boxShadow: "0 8px 18px rgba(0,0,0,.12), inset 0 3px 10px rgba(255,255,255,.35)", // soft outer + inner glow
+}
 
   const logoTextStyle = {
     fontSize: "20px",
