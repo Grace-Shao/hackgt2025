@@ -18,8 +18,8 @@ export default function Home() {
           <Heart className={styles.logoIcon} aria-hidden />
         </div>
 
-        {/* Brand wordmark */}
-        <h1 className={styles.brand}>CogniCare</h1>
+  {/* Brand wordmark */}
+  <h1 className={styles.brand} style={{ fontFamily: '"Times New Roman", Times, serif' }}>CogniCare</h1>
 
         {/* Primary CTA */}
         <div className={styles.ctaRow}>
