@@ -3,6 +3,7 @@ import { Gamepad2 } from "lucide-react"
 import { User, BookOpen, Brain, Target } from "lucide-react"
 import Image from "next/image"
 import { MainNav } from "@/components/main-nav"
+import SocialMeeting from "@/components/social-meeting"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -44,38 +45,7 @@ export default function ClassroomPage() {
     },
   ]
 
-  const classroomItems = [
-    {
-      name: "Teacher Desk",
-      icon: "👩‍🏫",
-      position: { top: "5%", left: "35%" },
-      color: "bg-amber-300",
-    },
-    {
-      name: "Computer",
-      icon: "💻",
-      position: { top: "15%", left: "85%" },
-      color: "bg-gray-300",
-    },
-    {
-      name: "TV",
-      icon: "📺",
-      position: { top: "45%", left: "2%" },
-      color: "bg-slate-400",
-    },
-    {
-      name: "Storage",
-      icon: "📦",
-      position: { top: "15%", left: "5%" },
-      color: "bg-orange-300",
-    },
-    {
-      name: "Bookshelf",
-      icon: "📚",
-      position: { top: "35%", left: "93%" },
-      color: "bg-purple-400",
-    },
-  ]
+  // classroomItems removed — only the social meeting (teacher) remains on the floor
 
   // icon components for each game station (no emoji)
   const gameIcons = {
@@ -167,10 +137,8 @@ export default function ClassroomPage() {
 
             {/* Main Classroom Area */}
             <div className="relative h-[700px] w-full">
-              <div className="absolute top-[5%] left-[35%] w-[30%] h-[15%] bg-amber-300 rounded-lg border border-amber-400 shadow-md">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-2xl">👩‍🏫</div>
-                </div>
+              <div className="absolute top-[5%] left-[35%] w-[30%] h-[15%] bg-amber-300 rounded-lg border border-amber-400 shadow-md flex items-center justify-center">
+                <SocialMeeting />
                 {/* Teacher's Chair */}
                 <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-400 rounded-full border border-green-500 shadow-sm"></div>
               </div>
@@ -224,16 +192,7 @@ export default function ClassroomPage() {
                 </div>
               ))}
 
-              {/* Regular Student Desks (non-game stations) */}
-              {classroomItems.map((item, index) => (
-                <div key={index} className="absolute" style={item.position}>
-                  <div className={`${item.color} rounded border border-gray-300 shadow-md`}>
-                    <div className="flex items-center justify-center h-full">
-                      <div className="text-xl">{item.icon}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {/* Student desks removed; only the social meeting / teacher area remains */}
 
               <div className="absolute bottom-[10%] right-[8%] w-8 h-10 bg-gray-400 rounded border border-gray-500 shadow-md">
                 <div className="flex items-center justify-center h-full">
