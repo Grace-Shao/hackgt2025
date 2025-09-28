@@ -6,13 +6,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Heart, Home, Users, Brain, User, Menu, X, GraduationCap } from "lucide-react"
 
-export function MainNav() {
+export function HCPNav() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/classroom", label: "Classroom", icon: GraduationCap },
+    { href: "/medical", label: "Home", icon: Home },
+    { href: "/calendar", label: "Calendar", icon: GraduationCap },
     { href: "/profile", label: "My Profile", icon: User },
   ]
 
@@ -97,6 +97,49 @@ const logoIconStyle = {
     minHeight: "44px",
   })
 
+  const mobileButtonStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "8px",
+    backgroundColor: "transparent",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    color: "#6b4b3e",
+  }
+
+  const mobileNavStyle = {
+    marginTop: "16px",
+    paddingTop: "16px",
+    paddingBottom: "16px",
+    borderTop: "1px solid #e5e7eb",
+  }
+
+  const mobileNavContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+  }
+
+  const getMobileButtonStyle = (active) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    padding: "16px",
+    fontSize: "16px",
+    fontWeight: "500",
+    textDecoration: "none",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    transition: "all 0.2s",
+    backgroundColor: active ? "#c49e85" : "transparent",
+    color: active ? "white" : "#6b4b3e",
+    justifyContent: "flex-start",
+    width: "100%",
+    minHeight: "44px",
+  })
 
   return (
     <header style={headerStyle}>
