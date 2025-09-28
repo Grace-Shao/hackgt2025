@@ -2,8 +2,10 @@
 "use client";
 
 import Link from "next/link";
-import { Gamepad2 } from "lucide-react";
+import { Gamepad2, User, BookOpen, Brain, Target } from "lucide-react";
+import Image from "next/image";
 import { MainNav } from "@/components/main-nav";
+import SocialMeeting from "@/components/social-meeting"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -40,32 +42,40 @@ const boardFloor = {
 const stations = [
   {
     id: 1,
-    title: "Memory",
+    title: "Simon Says",
     subtitle: "Recall & remember",
     difficulty: "Easy",
     pos: { top: "42%", left: "30%" },
-    href: "/games/memory",
+    href: "/games/face",
     mug: "☕",
   },
   {
     id: 2,
-    title: "Focus",
+    title: "Word Master",
     subtitle: "Attention trainer",
     difficulty: "Medium",
     pos: { top: "42%", left: "50%" },
-    href: "/games/face",
+    href: "/games/word",
     mug: "🍵",
   },
   {
     id: 3,
-    title: "Word",
+    title: "Memory Recall",
     subtitle: "Vocabulary play",
     difficulty: "Medium",
     pos: { top: "42%", left: "70%" },
-    href: "/games/word",
+    href: "/games/memory",
     mug: "☕",
   },
 ];
+
+// icon components for each game station (no emoji)
+const gameIcons = {
+  1: <User className="w-6 h-5 text-gray-800" aria-hidden />,
+  2: <BookOpen className="w-6 h-5 text-gray-800" aria-hidden />,
+  3: <Brain className="w-6 h-5 text-gray-800" aria-hidden />,
+  4: <Target className="w-6 h-5 text-gray-800" aria-hidden />,
+};
 
 /* -------------------- Tiny building blocks -------------------- */
 const border1 = "1px solid rgba(0,0,0,0.16)";
@@ -253,17 +263,17 @@ function WallClock() {
           width: 46,
           height: 46,
           borderRadius: 999,
-          background: "#fff",
+          // background: "#fff",
           border: border1,
           color: cozy.brown900,
           display: "grid",
           placeItems: "center",
           boxShadow: "0 4px 10px rgba(0,0,0,0.14)",
           fontWeight: 700,
-          fontSize: 12,
+          fontSize: 36,
         }}
       >
-        🕘
+        <span style={{ fontSize: 28, lineHeight: '46px' }}>🕘</span>
       </div>
     </div>
   );
@@ -296,7 +306,7 @@ function BulletinBoard() {
 function StringLights() {
   const bulbs = new Array(14).fill(0);
   return (
-    <div className="absolute" style={{ top: "6.5%", left: "11%", width: "78%" }} aria-hidden>
+    <div className="absolute" style={{ top: "1%", left: "11%", width: "78%" }} aria-hidden>
       <div style={{ height: 2, background: "rgba(0,0,0,0.35)", borderRadius: 2 }} />
       <div className="flex justify-between -mt-[8px]">
         {bulbs.map((_, i) => (
@@ -317,136 +327,35 @@ function StringLights() {
   );
 }
 
-function CoffeeCart() {
-  return (
-    <div className="absolute" style={{ top: "66%", left: "10%" }} aria-hidden>
-      <div
-        className="rounded-md p-2"
-        style={{
-          width: 130,
-          height: 74,
-          background: `linear-gradient(${cozy.woodB}, ${cozy.woodC})`,
-          border: border1,
-          boxShadow: "0 8px 18px rgba(0,0,0,0.18)",
-        }}
-      >
-        <div className="flex gap-2">
-          <Pill w={36} h={14} />
-          <Pill w={36} h={14} />
-          <Pill w={36} h={14} />
-        </div>
-        <div className="flex gap-2 mt-2">
-          <div className="text-[16px]">☕</div>
-          <div className="text-[16px]">🥐</div>
-          <div className="text-[16px]">🍪</div>
-        </div>
-      </div>
-    </div>
-  );
-}
+// CoffeeCart removed
 
-function CatNapping() {
-  return (
-    <div className="absolute" style={{ bottom: "10%", left: "18%" }} aria-hidden>
-      <Rug w={120} h={36} color="#ffe6c7" />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[60%] text-[22px]">🐈‍⬛</div>
-      <div className="absolute left-[60%] -top-2 text-xs opacity-80">z z z</div>
-    </div>
-  );
-}
+// CatNapping removed
 
 /* -------------------- Table station -------------------- */
-function TableStation({ title, subtitle, difficulty, href, pos, mug }) {
+function TableStation({ id, title, subtitle, difficulty, href, pos, mug }) {
   return (
     <div className="absolute" style={{ ...pos, transform: "translate(-50%, -50%)" }}>
       {/* Rug */}
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <Rug />
-      </div>
+      </div> */}
 
-      {/* Stools (left / right) */}
-      <Stool x={-70} y={24} />
-      <Stool x={+70} y={24} />
-
-      {/* Legs */}
-      <div className="relative -mt-[6px] flex justify-center gap-16">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            style={{
-              width: 14,
-              height: 40,
-              borderRadius: 6,
-              background: `linear-gradient(${cozy.woodD}, ${cozy.woodC})`,
-              border: border1,
-              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Tabletop */}
+      {/* table image wrapper (from user) */}
       <Link href={href} className="group block focus:outline-none" aria-label={`${title} station`}>
-        <div
-          className="relative mt-1 rounded-xl transition-all group-hover:-translate-y-[2px] group-hover:shadow-lg"
-          style={{
-            width: 320,
-            height: 112,
-            marginLeft: -30,
-            background: `
-              linear-gradient(#e9c79d, #d9b287),
-              repeating-linear-gradient(90deg, rgba(0,0,0,0.04) 0 1px, rgba(0,0,0,0) 1px 9px)
-            `,
-            border: border1,
-            boxShadow: "0 6px 12px rgba(0,0,0,0.12)",
-          }}
-        >
-          {/* bevel cap */}
-          <div
-            style={{
-              height: 12,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-              background: "linear-gradient(#f2d7b4, #e1bd93)",
-              boxShadow: innerSh,
-            }}
+        <div className="relative group cursor-pointer w-[192px] h-[154px] transform transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-1">
+          <Image
+            src="/simpleTable.png"
+            alt={`${title} desk`}
+            width={192}
+            height={154}
+            className="pointer-events-none select-none w-full h-auto"
           />
 
-          {/* tabletop accessories */}
-          <BookStack x={70} y={38} />
-          <div className="absolute" style={{ right: 18, top: 24, fontSize: 14 }} aria-hidden>
-            {mug}
-          </div>
-
-          {/* cream plaque */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="rounded-md text-center px-4 py-2"
-              style={{
-                width: 240,
-                background: "linear-gradient(#fff, #fffbe9)",
-                border: "1px solid rgba(107,75,62,0.18)",
-                boxShadow: innerSh,
-                color: cozy.brown900,
-              }}
-            >
-              <div className="font-[800] text-[18px] leading-tight">{title}</div>
-              <div className="text-[12px] mt-[2px]" style={{ color: "#5e4e44", opacity: 0.9 }}>
-                {subtitle}
-              </div>
-              <div className="mt-2">
-                <span
-                  className="px-2 py-[2px] rounded-md text-[11px] font-bold"
-                  style={{
-                    color: cozy.brown900,
-                    background: "#fff",
-                    border: "1px solid rgba(107,75,62,0.25)",
-                    boxShadow: innerSh,
-                  }}
-                >
-                  {difficulty}
-                </span>
-              </div>
+          {/* Centered small white label box (icon + black title) */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="bg-white rounded-md w-28 h-20 flex flex-col items-center justify-center shadow-md">
+              <div>{gameIcons[id] ?? <Gamepad2 className="w-5 h-5 text-gray-800" />}</div>
+              <div className="text-sm font-bold text-black mt-1">{title}</div>
             </div>
           </div>
         </div>
@@ -507,7 +416,7 @@ export default function ClassroomPage() {
             color: "#6b4b3e",
           }}
         >
-          Your Wellness Café — Library Room
+          The Wellness Café
         </h2>
 
         <div className="text-center mb-6">
@@ -518,7 +427,7 @@ export default function ClassroomPage() {
                 style={{ backgroundColor: cozy.brown500 }}
               >
                 <Gamepad2 className="w-6 h-6" />
-                How to Play
+                Instructions
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -580,69 +489,18 @@ export default function ClassroomPage() {
               <FloorLamp />
 
               {/* Props */}
-              <CoffeeCart />
-              <CatNapping />
+              {/* <CoffeeCart /> */}
+              {/* <CatNapping /> */}
 
               {/* Game tables */}
               {stations.map((s) => (
                 <TableStation key={s.id} {...s} />
               ))}
 
-              {/* Social circle kept on the right */}
-              <div className="absolute" style={{ top: "66%", left: "78%" }} aria-label="social circle">
-                <div
-                  className="relative flex items-center justify-center rounded-full"
-                  style={{
-                    width: 54,
-                    height: 54,
-                    background: cozy.brown500,
-                    color: "#fff",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                  }}
-                >
-                  ☕
-                  {[
-                    { x: 0, y: -44, t: "C" },
-                    { x: 37, y: -26, t: "D" },
-                    { x: 44, y: 8, t: "" },
-                    { x: 20, y: 38, t: "A" },
-                    { x: -20, y: 38, t: "" },
-                    { x: -44, y: 8, t: "" },
-                    { x: -37, y: -26, t: "" },
-                  ].map((n, i) => (
-                    <div
-                      key={i}
-                      className="absolute flex items-center justify-center rounded-full"
-                      style={{
-                        width: 34,
-                        height: 34,
-                        left: 27 + n.x,
-                        top: 27 + n.y,
-                        background: i % 2 ? cozy.lav300 : "#fff",
-                        border: "1px solid rgba(107,75,62,0.25)",
-                        boxShadow: innerSh,
-                        color: cozy.brown900,
-                        fontSize: 12,
-                        fontWeight: 700,
-                      }}
-                      aria-hidden
-                    >
-                      {n.t}
-                    </div>
-                  ))}
-                </div>
+              {/* Social meeting control */}
+              <div className="absolute" style={{ top: "66%", left: "78%" }} aria-label="social meeting">
+                <SocialMeeting />
               </div>
-
-              {/* step plate for warmth */}
-              <div
-                className="absolute left-1/2 -translate-x-1/2 bottom-4 h-[10px] w-[70px] rounded-md"
-                style={{
-                  background: cozy.peach200,
-                  border: "1px solid rgba(107,75,62,0.25)",
-                  boxShadow: innerSh,
-                }}
-                aria-hidden
-              />
             </div>
           </div>
         </div>
