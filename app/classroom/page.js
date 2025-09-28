@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Gamepad2, User, BookOpen, Brain, Target } from "lucide-react";
 import Image from "next/image";
 import { MainNav } from "@/components/main-nav";
+import SocialMeeting from "@/components/social-meeting"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
