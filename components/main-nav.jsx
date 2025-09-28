@@ -12,7 +12,7 @@ export function MainNav() {
 
   const navItems = [
     { href: "/", label: "Home", icon: Home },
-    { href: "/classroom", label: "Classroom", icon: GraduationCap },
+    { href: "/classroom", label: "Community", icon: GraduationCap },
     { href: "/profile", label: "My Profile", icon: User },
   ]
 
