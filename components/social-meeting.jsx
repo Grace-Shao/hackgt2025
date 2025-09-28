@@ -45,7 +45,7 @@ export default function SocialMeeting({ mirrored = false }) {
       <Link
         href="/meeting"
         aria-label="Open meetings"
-        className="rounded-full w-[260px] h-[260px] flex items-center justify-center hover:scale-105 overflow-hidden transition-shadow duration-200 hover:shadow-[0_6px_12px_rgba(0,0,0,0.18)]"
+        className="rounded-full w-[260px] h-[260px] flex items-center justify-center hover:scale-105 overflow-hidden focus:outline-none"
       >
         <Image
           src="/beanbag.png"

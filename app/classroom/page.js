@@ -71,10 +71,10 @@ const stations = [
 
 // icon components for each game station (no emoji)
 const gameIcons = {
-  1: <User className="w-6 h-5 text-gray-800" aria-hidden />,
-  2: <BookOpen className="w-6 h-5 text-gray-800" aria-hidden />,
-  3: <Brain className="w-6 h-5 text-gray-800" aria-hidden />,
-  4: <Target className="w-6 h-5 text-gray-800" aria-hidden />,
+  1: <User className="w-7 h-6 text-gray-800" aria-hidden />,
+  2: <BookOpen className="w-7 h-6 text-gray-800" aria-hidden />,
+  3: <Brain className="w-7 h-6 text-gray-800" aria-hidden />,
+  4: <Target className="w-7 h-6 text-gray-800" aria-hidden />,
 };
 
 /* -------------------- Tiny building blocks -------------------- */
@@ -346,7 +346,7 @@ function TableStation({ id, title, subtitle, difficulty, href, pos, mug }) {
 
       {/* table image wrapper (from user) */}
       <Link href={href} className="group block focus:outline-none" aria-label={`${title} station`}>
-        <div className="relative group cursor-pointer w-[192px] h-[154px] transform transition-all duration-200 hover:scale-105 hover:shadow-lg hover:-translate-y-1">
+  <div className="relative group cursor-pointer w-[192px] h-[154px] transform transition-all duration-200 hover:scale-105">
           <Image
             src="/table.png"
             alt={`${title} desk`}
@@ -357,9 +357,9 @@ function TableStation({ id, title, subtitle, difficulty, href, pos, mug }) {
 
           {/* Centered small white label box (icon + black title) moved down 10% */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ transform: 'translateY(10%)' }}>
-            <div className="bg-white rounded-md w-28 h-20 flex flex-col items-center justify-center shadow-md">
-              <div>{gameIcons[id] ?? <Gamepad2 className="w-5 h-5 text-gray-800" />}</div>
-              <div className="text-sm font-bold text-black mt-1">{title}</div>
+            <div className="bg-white rounded-md w-32 h-24 flex flex-col items-center justify-center">
+              <div>{gameIcons[id] ?? <Gamepad2 className="w-7 h-6 text-gray-800" />}</div>
+              <div className="text-base font-bold text-black mt-1">{title}</div>
             </div>
           </div>
         </div>
@@ -420,7 +420,7 @@ export default function ClassroomPage() {
             color: "#6b4b3e",
           }}
         >
-          The Wellness Café
+          Welcome to the Wellness Café
         </h2>
 
         <div className="text-center mb-6">
@@ -500,11 +500,17 @@ export default function ClassroomPage() {
 
               {/* Social meeting control */}
               <div className="absolute" style={{ top: "62%", left: "72%" }} aria-label="social meeting">
-                <SocialMeeting />
+             <div className="flex flex-col items-center">
+                <div className="text-base font-bold text-black -mb-1">Join Social</div>
+              <SocialMeeting />
+             </div>
               </div>
               {/* mirrored beanbag on the left (mirrored position of right beanbag) */}
               <div className="absolute" style={{ top: "62%", left: "0%" }} aria-label="social meeting left">
-                <SocialMeeting mirrored />
+             <div className="flex flex-col items-center">
+                <div className="text-base font-bold text-black -mb-1">Join Social</div>
+              <SocialMeeting mirrored />
+             </div>
               </div>
             </div>
             {/* Place lights above the inner rounded border */}
